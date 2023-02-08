@@ -1,8 +1,32 @@
 import React from 'react';
+import Axios from 'axios';
+import { SignIn } from 'api/LoginApi';
+import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login()
 {
+    const signInMutation = useMutation( SignIn,
+    {
+        onMutate: variable => 
+        {
+            console.log("onMutate", variable);
+        // variable : {loginId: 'xxx', password; 'xxx'}
+        },
+        onError: (error, variable, context) => 
+        {
+        // error
+        },
+        onSuccess: (data, variables, context) => 
+        {
+            console.log("success", data, variables, context);
+        },
+        onSettled: () => 
+        {
+            console.log("end");
+        }
+    });
+    
     return (
         <div className={'w-100 d-flex align-items-center justify-content-center vh-100 '}>
             <form style={{'width' : '20rem'}}>
@@ -18,7 +42,7 @@ function Login()
                 {/*    </MDBCol>*/}
                 {/*</MDBRow>*/}
 
-                <MDBBtn type='submit' block>
+                <MDBBtn block onClick={ (e) => { e.preventDefault(); signInMutation.mutate( { username : 'user', password : 'user'}) }}>
                     Sign in
                 </MDBBtn>
             </form>
