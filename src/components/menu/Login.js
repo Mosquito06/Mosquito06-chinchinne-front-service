@@ -1,29 +1,24 @@
 import React from 'react';
 import Axios from 'axios';
 import { SignIn } from 'api/LoginApi';
+import { useNavigate } from 'react-router-dom'; 
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login()
 {
+    const navigate = useNavigate();
+    
     const signInMutation = useMutation( SignIn,
     {
-        onMutate: variable => 
-        {
-            console.log("onMutate", variable);
-        // variable : {loginId: 'xxx', password; 'xxx'}
-        },
         onError: (error, variable, context) => 
         {
-        // error
-        },
-        onSuccess: (data, variables, context) => 
+            // error
+        }
+        ,onSuccess: (data, variables, context) => 
         {
-            console.log("success", data, variables, context);
-        },
-        onSettled: () => 
-        {
-            console.log("end");
+            localStorage.setItem('ref-token', JSON.stringify(data));
+            navigate('/');
         }
     });
     
