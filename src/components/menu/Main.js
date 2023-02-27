@@ -1,22 +1,12 @@
 import React from 'react';
 import Axios from 'axios';
-import { SignIn } from 'api/LoginApi';
+
 import { useQuery, useMutation, useQueryClient } from 'react-query';
 import { MDBContainer, MDBRow, MDBCol, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle  } from 'mdb-react-ui-kit';
 
 function Login()
 {
-    const signInMutation = useMutation( SignIn,
-    {
-        onError: (error, variable, context) => 
-        {
-            // error
-        }
-        ,onSuccess: (data, variables, context) => 
-        {
-            
-        }
-    });
+   
     
     return (
         <MDBContainer className='vh-100' fluid>

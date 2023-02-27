@@ -1,26 +1,53 @@
-import React from 'react';
-import Axios from 'axios';
-import { SignIn } from 'api/LoginApi';
+import React, { useState, useContext } from 'react';
+import LoginApi from 'api/LoginApi';
 import { useNavigate } from 'react-router-dom'; 
-import { useQuery, useMutation, useQueryClient } from 'react-query';
+import { GlobalContext } from 'context/GlobalContext';
 import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login()
 {
-    const navigate = useNavigate();
+    // context
+    const { GLOBAL_TOKEN, GLOBAL_MODAL } = useContext(GlobalContext);
     
-    const signInMutation = useMutation( SignIn,
+    // Naavigate
+    const navigate = useNavigate();
+
+    // login State
+    const [login, setLogin] = useState(
     {
-        onError: (error, variable, context) => 
+         email : ''
+        ,password : ''
+    })
+    
+    // 로그인 Query
+    const SignInQuery = LoginApi.useSignIn(
+    {
+        queryOptions :
         {
-            // error
+            success : ( res ) =>
+            {
+                sessionStorage.setItem('ref-token', JSON.stringify( res.data.response ));
+                //GLOBAL_LOGIN.setLoginInfo( res.data.response );
+                
+                navigate('/');
+            }
+            ,settle : () => {}
         }
-        ,onSuccess: (data, variables, context) => 
+    })
+
+    const onLoginClicked = e =>
+    {
+        e.preventDefault(); 
+        
+        GLOBAL_MODAL.setModal( prevState => (
         {
-            localStorage.setItem('ref-token', JSON.stringify(data));
-            navigate('/');
-        }
-    });
+             isVisible : true
+            ,isConfirm : false
+        }))
+
+        
+        //SignInQuery.mutate( { username : 'user', password : 'user1'})
+    }
     
     return (
         <div className={'w-100 d-flex align-items-center justify-content-center vh-100 '}>
@@ -37,7 +64,7 @@ function Login()
                 {/*    </MDBCol>*/}
                 {/*</MDBRow>*/}
 
-                <MDBBtn block onClick={ (e) => { e.preventDefault(); signInMutation.mutate( { username : 'user', password : 'user'}) }}>
+                <MDBBtn block onClick={ onLoginClicked }>
                     Sign in
                 </MDBBtn>
             </form>
