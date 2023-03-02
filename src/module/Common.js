@@ -66,22 +66,12 @@ export const queryUtil =
     {
         options.onSuccess = res => 
         {
-            if( res.data.isSuccess )
-            {
-                props.success( res );
-            }
-            else
-            {
-                props.error( res.data );
-            }
+            props.success( res );
         }
 
         options.onError = res =>
         {
-            props.error( 
-            {
-                message : '요청 오류 발생 - 관리자 문의'
-            });
+            props.error( res );
         }
 
         options.onSettled =  () =>
@@ -126,22 +116,12 @@ export const queryUtil =
     {
         options.onSuccess = res => 
         {
-            if( res.data.isSuccess )
-            {
-                props.success( res );
-            }
-            else
-            {
-                props.error( res.data );
-            }
+            props.success( res );
         }
 
         options.onError = res =>
         {
-            props.error( 
-            {
-                message : '요청 오류 발생 - 관리자 문의'
-            });
+            props.error( res );
         }
 
         options.onSettled =  () =>

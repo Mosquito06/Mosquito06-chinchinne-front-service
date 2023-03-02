@@ -25,7 +25,7 @@ export default () =>
             <MDBModalDialog>
             <MDBModalContent>
                 <MDBModalHeader>
-                <MDBModalTitle>Modal title</MDBModalTitle>
+                <MDBModalTitle>{ GLOBAL_MODAL.modal.text.title }</MDBModalTitle>
                 <MDBBtn className='btn-close' 
                         color='none' 
                         onClick=
@@ -41,21 +41,11 @@ export default () =>
                         }>
                 </MDBBtn>
                 </MDBModalHeader>
-                <MDBModalBody>...</MDBModalBody>
+                <MDBModalBody>{ GLOBAL_MODAL.modal.text.contents }</MDBModalBody>
 
                 <MDBModalFooter>
                 <MDBBtn color='secondary'
-                        onClick=
-                        {
-                            () =>
-                            {
-                                GLOBAL_MODAL.setModal( prevState => (
-                                {
-                                    ...prevState
-                                    ,isVisible : false
-                                }))
-                            }
-                        }
+                        onClick={ () => { GLOBAL_MODAL.modal.callBack( false ); }}
                 >
                     Close
                 </MDBBtn>
@@ -64,7 +54,7 @@ export default () =>
                     {
                         if( GLOBAL_MODAL.modal.isConfirm )
                         {
-                            return <MDBBtn>Save changes</MDBBtn>;
+                            return <MDBBtn onClick={ () => { GLOBAL_MODAL.modal.callBack( true ); }} >Save changes</MDBBtn>;
                         }
 
                     })()

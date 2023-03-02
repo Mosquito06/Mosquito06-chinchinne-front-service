@@ -1,13 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import LoginApi from 'api/LoginApi';
 import { useNavigate } from 'react-router-dom'; 
 import { GlobalContext } from 'context/GlobalContext';
-import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBSpinner, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login()
 {
     // context
-    const { GLOBAL_TOKEN, GLOBAL_MODAL } = useContext(GlobalContext);
+    const { GLOBAL_TOKEN } = useContext(GlobalContext);
     
     // Naavigate
     const navigate = useNavigate();
@@ -18,6 +18,21 @@ function Login()
          email : ''
         ,password : ''
     })
+
+    const loginRef = 
+    {
+         email : useRef()
+        ,password : useRef()
+    }
+
+    const onLoginChanged = e =>
+    {
+        setLogin( prevState => (
+        {
+             ...prevState
+            ,[ e.target.name ] : e.target.value
+        }))
+    }
     
     // 로그인 Query
     const SignInQuery = LoginApi.useSignIn(
@@ -26,8 +41,8 @@ function Login()
         {
             success : ( res ) =>
             {
-                sessionStorage.setItem('ref-token', JSON.stringify( res.data.response ));
-                //GLOBAL_LOGIN.setLoginInfo( res.data.response );
+                sessionStorage.setItem('ref-token', JSON.stringify( res.data ));
+                GLOBAL_TOKEN.setToken( res.data );
                 
                 navigate('/');
             }
@@ -39,21 +54,24 @@ function Login()
     {
         e.preventDefault(); 
         
-        GLOBAL_MODAL.setModal( prevState => (
+        for( let attr in login )
         {
-             isVisible : true
-            ,isConfirm : false
-        }))
-
+            if( !login[attr] )
+            {
+                loginRef[attr].current.focus();
+                
+                return;
+            }
+        }
         
-        //SignInQuery.mutate( { username : 'user', password : 'user1'})
+        SignInQuery.mutate( { username : login.email, password : login.password })
     }
     
     return (
         <div className={'w-100 d-flex align-items-center justify-content-center vh-100 '}>
             <form style={{'width' : '20rem'}}>
-                <MDBInput className='mb-4' type='email' id='form1Example1' label='Email address' />
-                <MDBInput className='mb-4' type='password' id='form1Example2' label='Password' />
+                <MDBInput className='mb-4' type='email' label='Email address' name='email' ref={ loginRef.email } value={ login.email } onChange={ onLoginChanged }/>
+                <MDBInput className='mb-4' type='password' label='Password' name='password' ref={ loginRef.password } value={ login.password } onChange= { onLoginChanged }/>
 
                 {/*<MDBRow className='mb-4'>*/}
                 {/*    <MDBCol className='d-flex justify-content-center'>*/}
@@ -64,9 +82,24 @@ function Login()
                 {/*    </MDBCol>*/}
                 {/*</MDBRow>*/}
 
-                <MDBBtn block onClick={ onLoginClicked }>
-                    Sign in
-                </MDBBtn>
+                {
+                    (() =>
+                    {
+                        if( SignInQuery.isLoading )
+                        {
+                            return (
+                                <MDBBtn disabled className={'me-2 w-100'}>
+                                    <MDBSpinner size='sm' role='status' tag='span' />
+                                </MDBBtn>
+                            )
+                        }
+                        else
+                        {
+                            return <MDBBtn block onClick={ onLoginClicked }>Sign in</MDBBtn>;
+                        }
+
+                    })()
+                }
             </form>
         </div>
     )

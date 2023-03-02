@@ -1,4 +1,6 @@
+import { useContext } from 'react';
 import { axiosUtil, queryUtil } from 'module/Common';
+import { GlobalContext } from 'context/GlobalContext';
 
 // export const SignIn = ( params ) =>
 // {
@@ -9,7 +11,7 @@ export default
 {
     useSignIn : ( { queryOptions = { success : () => {}, settle : () => {} } } ) =>
     {
-        //const { GLOBAL_ALERT } = useContext(GlobalContext);
+        const { GLOBAL_MODAL } = useContext(GlobalContext);
 
         return queryUtil.useCommandQuery(
         {
@@ -29,13 +31,19 @@ export default
                 ,settle : queryOptions.settle
                 ,error : ( e ) =>
                 {
-                    // GLOBAL_ALERT.setPopup(
-                    // {
-                    //      isAlertVisible : true
-                    //     ,message : e.message
-                    //     ,type : ''
-                    //     ,callBack : () => { GLOBAL_ALERT.setPopup( prevState => ({...prevState, isAlertVisible : false})); }
-                    // })
+                    GLOBAL_MODAL.setModal( prevState => (
+                    {
+                         ...prevState
+                        ,isVisible : true
+                        ,text : 
+                        {
+                            ...prevState.text
+                            ,title : 'Alert'
+                            ,contents : e.response.data.message
+                        }
+                        ,isConfirm : false
+                        ,callBack : ( res ) => { GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); }
+                    }))
                 }
             }
             ,options :

@@ -1,9 +1,12 @@
-import React from 'react'; 
+import React, { useContext } from 'react'; 
 import { Navigate } from 'react-router-dom'; 
+import { GlobalContext } from 'context/GlobalContext';
 
 const PrivateRoute = ({component : RouteComponent}) => 
 {
-    const token = JSON.parse(localStorage.getItem('ref-token'));
+    const { GLOBAL_TOKEN } = useContext(GlobalContext);
+    
+    const token = GLOBAL_TOKEN.token;
 
     if( !token ) 
     {

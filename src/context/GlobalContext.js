@@ -17,7 +17,7 @@ export default ( { children } ) =>
             ,contents : ''
         } 
         ,isConfirm : false
-        ,callBack : () => 
+        ,callBack : ( res ) => 
         { 
             setModal( prevState => (
             {
