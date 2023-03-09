@@ -5,7 +5,7 @@ const PublicRoute = ({component : RouteComponent, restricted}) =>
 {
     if( restricted )
     {
-        const token = JSON.parse(localStorage.getItem('ref-token'));
+        const token = JSON.parse(sessionStorage.getItem('ref-token'));
 
         // 로그인 된 경우, 첫 메뉴로 이동
         if( token )

@@ -1,11 +1,11 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import MyDate from 'components/item/common/MyDate';
+import { COMMON_DATE_STATUS } from 'module/CommonCode';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 
 function MyCalendar( { year, month })
 {
     const [date, setDate] = useState([]);
-    
     
     const init = () =>
     {
@@ -26,8 +26,6 @@ function MyCalendar( { year, month })
             list.push(i + 1);
         }
 
-        console.log(list);
-
         setDate(list);
     }
 
@@ -35,8 +33,8 @@ function MyCalendar( { year, month })
     {   
         init();
 
-    }, [])
-    
+    }, [ year, month ])
+
     return (
         <MDBContainer className={'h-100 square border-top'}>
             <MDBRow className='text-center square border-start border-bottom border-end' >
@@ -53,12 +51,21 @@ function MyCalendar( { year, month })
                 {
                     const tmp = [...date];
                     let elments = [], list = [];
+                    let isStart = false;
 
                     for(let i = 0; i < date.length; i++)
                     {
+                        if( date[i] === 1 )
+                        {
+                            isStart = true;
+                        }                        
+                        
                         list.push
                         (
-                            <MyDate date={ date[i] }/>
+                            <MyDate key={ 'cal_date_' + ( !isStart ? ( month - 1 ) : month ) + '_' + date[i] } 
+                                    status={ !isStart ? COMMON_DATE_STATUS.PREV : COMMON_DATE_STATUS.CUR }
+                                    date={ date[i] }
+                            />
                         )
 
                         tmp.pop();
@@ -67,20 +74,25 @@ function MyCalendar( { year, month })
                         {
                             elments.push
                             (
-                                <MDBRow className='square border-start border-bottom border-end' style={ { height : '15%'} }>
+                                <MDBRow key={ 'cal_row_' + elments.length } className='square border-start border-bottom border-end' style={ { height : '15.5%'} }>
                                     {
                                         (() => 
                                         {
                                             let repeat = 7 - list.length;
+                                            let next = 1;
 
                                             while( repeat > 0 )
                                             {
                                                 list.push
                                                 (
-                                                    <MyDate />
+                                                    <MyDate key={ 'cal_date_' + ( month + 1 ) + '_' + next } 
+                                                            status={ COMMON_DATE_STATUS.NEXT } 
+                                                            date={ next }
+                                                    />
                                                 );
                                                 
                                                 repeat--;
+                                                next++;
                                             }
 
                                             return list.map( myDate =>

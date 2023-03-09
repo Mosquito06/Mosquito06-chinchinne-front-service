@@ -2,11 +2,6 @@ import { useContext } from 'react';
 import { axiosUtil, queryUtil } from 'module/Common';
 import { GlobalContext } from 'context/GlobalContext';
 
-// export const SignIn = ( params ) =>
-// {
-//     return axiosUtil({ method : axiosMethod.POST, url : '/login', params : params, option : {headers: { 'Content-Type': 'application/json' }} })();
-// }
-
 export default
 {
     useSignIn : ( { queryOptions = { success : () => {}, settle : () => {} } } ) =>

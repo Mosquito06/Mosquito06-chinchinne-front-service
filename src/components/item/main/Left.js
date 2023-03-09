@@ -10,6 +10,12 @@ function Left()
          year : new Date().getFullYear()
         ,month : new Date().getMonth()
     })
+
+    // 달력 변경 이벤트
+    const onCalendarChanged = e =>
+    {
+        
+    }
     
     return (
         <>
@@ -25,7 +31,18 @@ function Left()
                     </MDBDropdown>
                     <MDBDropdown style={{marginLeft : '0.5rem'}}>
                         <MDBDropdownToggle>{ ( calendar.month + 1 ) + COMMON_TEXT.MONTH }</MDBDropdownToggle>
-                        <MDBDropdownMenu>
+                        <MDBDropdownMenu onClick=
+                                         {
+                                            e =>
+                                            {
+                                                setCalendar( prevState => (
+                                                {
+                                                     ...prevState
+                                                    ,month : Number(e.target.value)
+                                                }))
+                                            }
+                                         }
+                        >
                             {
                                 (() =>
                                 {
