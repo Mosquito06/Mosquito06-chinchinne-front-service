@@ -1,12 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { axiosUtil, queryUtil } from 'module/Common';
 import { GlobalContext } from 'context/GlobalContext';
+import { COMMON_ERROR_CODE } from 'module/CommonCode';
 
 export default
 {
     useSearchAccount : ( { queryOptions = { keys : ['', { pathString : null, queryString : null, params : null }], success : () => {}, settle : () => {}, isEnabled : true } } ) =>
     {
-        const { GLOBAL_MODAL } = useContext(GlobalContext);
+        const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
 
         return queryUtil.useSingleQuery(
         {
@@ -14,16 +15,27 @@ export default
             ,fn : params =>
             {
                 const queryKey = params.queryKey;
-                const pathString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].pathString ) ? '/' + queryKey[1].pathString : '';
+                const pathString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].pathString ) ? queryKey[1].pathString : '';
                 const queryString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].queryString ) ? queryKey[1].queryString : '';
                 const axiosParams = ( queryKey.length > 0 && queryKey[1] && queryKey[1].params ) ? queryKey[1].params : null;
-                
+
                 return axiosUtil.axios(
                 { 
                      method : axiosUtil.METHOD.GET
-                    ,url : '/account-service' + pathString + queryString
+                    ,url : '/account-service/' + pathString + queryString
                     ,params : axiosParams
-                    ,option : { headers: { 'Content-Type': 'application/json', 'Send-Type' : GLOBAL_LOGIN.loginInfo['90EDF7EC-7549-4237-A789-22FDBC95DE3E']} }
+                    ,option : 
+                    { 
+                        headers: 
+                        { 
+                             'Content-Type': 'application/json'
+                            ,'ChinChinne-Authorization' : JSON.stringify(
+                            {
+                                 'accessToken' : GLOBAL_TOKEN.token.access_token
+                                ,'refreshToken' : GLOBAL_TOKEN.token.refresh_token
+                            })
+                        }
+                    }
                 })()
             }
             ,props :

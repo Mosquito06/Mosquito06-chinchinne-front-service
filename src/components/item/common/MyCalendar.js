@@ -1,11 +1,49 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
+import AccountApi from 'api/AccountApi';
 import MyDate from 'components/item/common/MyDate';
-import { COMMON_DATE_STATUS } from 'module/CommonCode';
+import { useQueryClient   } from 'react-query';
+import { GlobalContext } from 'context/GlobalContext';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import { COMMON_DATE_STATUS, COMMON_QUERY_KEYS, COMMON_ERROR_CODE } from 'module/CommonCode';
 
-function MyCalendar( { year, month })
+function MyCalendar( { year, month, time })
 {
+    const { GLOBAL_TOKEN } = useContext(GlobalContext);
+    
+    const QUERY_KEY = [ COMMON_QUERY_KEYS.SEARCH_ACCOUNT, { pathString : '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts', isRefresh : false} ]
+
+    const [search, setSearch] = useState(
+    {
+         keys : QUERY_KEY
+        ,isFetch : true
+    })
+    
     const [date, setDate] = useState([]);
+
+    const queryClient = useQueryClient();
+    
+    // 조회 Query
+    const SearchAccountQuery = AccountApi.useSearchAccount(
+    {
+        queryOptions : 
+        {
+             keys: search.keys
+            ,success : ( res ) =>
+            {
+                console.log(res);
+            }
+            ,settle : () =>
+            {
+                setSearch( prevState => (
+                {
+                     ...prevState
+                    ,isFetch : false
+                    
+                }));
+            }
+            ,isEnabled : search.isFetch
+        }
+    })
     
     const init = () =>
     {

@@ -1,4 +1,6 @@
 import Axios from 'axios';
+import { useContext } from 'react';
+import { GlobalContext } from 'context/GlobalContext';
 import { useQuery, useQueries, useMutation  } from 'react-query';
 
 export const axiosUtil = 
@@ -64,8 +66,19 @@ export const queryUtil =
 {
     useSingleQuery : ( { keys, fn, props = { success : () => {}, error : () => {}, settle : () =>{} }, options = {} } )  =>
     {
+        const { GLOBAL_TOKEN } = useContext(GlobalContext);
+        
         options.onSuccess = res => 
         {
+            if( res.headers.hasOwnProperty('retoken') )
+            {
+                let reToken = GLOBAL_TOKEN.token;
+                reToken.access_token = res.headers.retoken;
+
+                sessionStorage.setItem('ref-token', JSON.stringify( reToken ));
+                GLOBAL_TOKEN.setToken(reToken);
+            }
+            
             props.success( res );
         }
 

@@ -1,3 +1,9 @@
+// Query Keys
+export const COMMON_QUERY_KEYS = 
+{
+    SEARCH_ACCOUNT : 'search_account'
+}
+
 // 공통 텍스트
 export const COMMON_TEXT = 
 {
@@ -26,6 +32,7 @@ export const COMMON_DATE_STATUS =
     ,NEXT : 1   // 다음 월의 일
 }
 
+// 공통 에러 코드
 export const COMMON_ERROR_CODE =
 {
      UNKNOWN_MEMBER : 'UNKNOWN_MEMBER'
@@ -33,3 +40,4 @@ export const COMMON_ERROR_CODE =
     ,NOT_FOUND_TOKEN : 'NOT_FOUND_TOKEN'
     ,EXPIRE_TOKEN : 'EXPIRE_TOKEN'
 }
+

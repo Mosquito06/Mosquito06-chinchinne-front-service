@@ -9,6 +9,7 @@ function Left()
     {
          year : new Date().getFullYear()
         ,month : new Date().getMonth()
+        ,time : new Date().getTime()
     })
 
     // 달력 변경 이벤트
@@ -35,10 +36,13 @@ function Left()
                                          {
                                             e =>
                                             {
+                                                const curDate = new Date(new Date().setMonth(Number(e.target.value)));
+                                                
                                                 setCalendar( prevState => (
                                                 {
                                                      ...prevState
-                                                    ,month : Number(e.target.value)
+                                                    ,month : curDate.getMonth()
+                                                    ,time : curDate.getTime()
                                                 }))
                                             }
                                          }
@@ -65,7 +69,7 @@ function Left()
             </MDBRow>
             
             <MDBRow className='' style={{ height : '95%'}}>
-                <MyCalendar year={ calendar.year } month={ calendar.month }/>
+                <MyCalendar year={ calendar.year } month={ calendar.month } time={ calendar.time }/>
             </MDBRow>
         </>
     )
