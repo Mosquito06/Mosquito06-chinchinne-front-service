@@ -45,7 +45,7 @@ export default () =>
 
                 <MDBModalFooter>
                 <MDBBtn color='secondary'
-                        onClick={ () => { GLOBAL_MODAL.modal.callBack( false ); }}
+                        onClick={ () => { GLOBAL_MODAL.modal.callBack( false ); } }
                 >
                     Close
                 </MDBBtn>
@@ -54,7 +54,7 @@ export default () =>
                     {
                         if( GLOBAL_MODAL.modal.isConfirm )
                         {
-                            return <MDBBtn onClick={ () => { GLOBAL_MODAL.modal.callBack( true ); }} >Save changes</MDBBtn>;
+                            return <MDBBtn onClick={ () => { GLOBAL_MODAL.modal.callBack( true ); } } >Save changes</MDBBtn>;
                         }
 
                     })()

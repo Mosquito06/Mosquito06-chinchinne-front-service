@@ -1,7 +1,6 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
 import AccountApi from 'api/AccountApi';
 import MyDate from 'components/item/common/MyDate';
-import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { COMMON_DATE_STATUS, COMMON_QUERY_KEYS, COMMON_ERROR_CODE } from 'module/CommonCode';
@@ -10,17 +9,19 @@ function MyCalendar( { year, month, time })
 {
     const { GLOBAL_TOKEN } = useContext(GlobalContext);
     
-    const QUERY_KEY = [ COMMON_QUERY_KEYS.SEARCH_ACCOUNT, { pathString : '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts', isRefresh : false} ]
+    const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_ACCOUNT, { pathString : '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts'} ])
 
     const [search, setSearch] = useState(
     {
-         keys : QUERY_KEY
+         keys : queryKey
         ,isFetch : true
     })
     
-    const [date, setDate] = useState([]);
-
-    const queryClient = useQueryClient();
+    const [date, setDate] = useState(
+    {
+         list : []
+        ,data : []
+    });
     
     // 조회 Query
     const SearchAccountQuery = AccountApi.useSearchAccount(
@@ -30,22 +31,28 @@ function MyCalendar( { year, month, time })
              keys: search.keys
             ,success : ( res ) =>
             {
-                console.log(res);
+                setDate( prevState => (
+                {
+                     ...prevState
+                    ,data : res.data
+                }))
+                
+                createCalendar();
             }
             ,settle : () =>
             {
-                setSearch( prevState => (
-                {
-                     ...prevState
-                    ,isFetch : false
+                // setSearch( prevState => (
+                // {
+                //      ...prevState
+                //     ,isFetch : false
                     
-                }));
+                // }));
             }
             ,isEnabled : search.isFetch
         }
     })
     
-    const init = () =>
+    const createCalendar = () =>
     {
         const lastM = new Date(year, month, 0);
         const curStart = new Date(year, month, 1);
@@ -64,14 +71,25 @@ function MyCalendar( { year, month, time })
             list.push(i + 1);
         }
 
-        setDate(list);
+        setDate( prevState => (
+        {
+             ...prevState
+            ,list : list
+        }));
     }
 
     useEffect( () =>
     {   
-        init();
+        //set
+        setQueryKey( prevState => 
+        {
+            let tmp = [...prevState];
+            tmp[1].pathString = '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts';
 
-    }, [ year, month ])
+            return tmp;
+        });
+
+    }, [ time ])
 
     return (
         <MDBContainer className={'h-100 square border-top'}>
@@ -87,22 +105,29 @@ function MyCalendar( { year, month, time })
             {
                 (() =>
                 {
-                    const tmp = [...date];
+                    const tmp = [...date.list];
                     let elments = [], list = [];
                     let isStart = false;
 
-                    for(let i = 0; i < date.length; i++)
+                    for(let i = 0; i < date.list.length; i++)
                     {
-                        if( date[i] === 1 )
+                        if( date.list[i] === 1 )
                         {
                             isStart = true;
-                        }                        
+                        }
+                        
+                        const displayData = date.data.filter( row => 
+                        {
+                            return Number(row.month) === ( month + 1 ) && Number(row.day) === date.list[i]
+                        })
                         
                         list.push
                         (
-                            <MyDate key={ 'cal_date_' + ( !isStart ? ( month - 1 ) : month ) + '_' + date[i] } 
+                            <MyDate key={ 'cal_date_' + ( !isStart ? ( month - 1 ) : month ) + '_' + date.list[i] } 
                                     status={ !isStart ? COMMON_DATE_STATUS.PREV : COMMON_DATE_STATUS.CUR }
-                                    date={ date[i] }
+                                    date={ date.list[i] }
+                                    income={ displayData.length > 0 ? displayData[0].incomeTotal : null }
+                                    expense={ displayData.length > 0 ? displayData[0].expenseTotal : null }
                             />
                         )
 
