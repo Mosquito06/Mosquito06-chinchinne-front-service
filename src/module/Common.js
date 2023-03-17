@@ -145,3 +145,9 @@ export const queryUtil =
         return useMutation( fn, options );
     }
 }
+
+// 콤마 포맷
+export const CommaFormatter = ( value ) =>
+{
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}

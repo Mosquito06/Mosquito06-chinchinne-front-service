@@ -7,7 +7,7 @@ import { COMMON_DATE_STATUS, COMMON_QUERY_KEYS, COMMON_ERROR_CODE } from 'module
 
 function MyCalendar( { year, month, time })
 {
-    const { GLOBAL_TOKEN } = useContext(GlobalContext);
+    const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
     
     const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_ACCOUNT, { pathString : '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts'} ])
 
@@ -31,6 +31,17 @@ function MyCalendar( { year, month, time })
              keys: search.keys
             ,success : ( res ) =>
             {
+                const TOTAL = res.data.reduce( ( sum, cur ) =>
+                {
+                    return sum += cur.expenseTotal;
+                }, 0 )
+
+                GLOBAL_MONEY.setMoney( prevState => (
+                {
+                     ...prevState
+                    ,expense : TOTAL
+                }))
+                
                 setDate( prevState => (
                 {
                      ...prevState
@@ -80,13 +91,12 @@ function MyCalendar( { year, month, time })
 
     useEffect( () =>
     {   
-        //set
         setQueryKey( prevState => 
         {
-            let tmp = [...prevState];
-            tmp[1].pathString = '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts';
+            let keys = [...prevState];
+            keys[1].pathString = '/' + GLOBAL_TOKEN.token.uuid + '/' + time + '/accounts';
 
-            return tmp;
+            return keys;
         });
 
     }, [ time ])

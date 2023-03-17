@@ -29,14 +29,15 @@ function MyDate( { status, date, income, expense })
                                             {
                                                 elments.push
                                                 (
-                                                    <div className={ COMMON_COLOR_CLASS.BLUE } 
-                                                        onClick=
-                                                        {
-                                                            () =>
+                                                    <div    key={ 'cal_date_sum' } 
+                                                            className={ COMMON_COLOR_CLASS.BLUE } 
+                                                            onClick=
                                                             {
-                                                                console.log('수입 총계!')
+                                                                () =>
+                                                                {
+                                                                    console.log('수입 총계!')
+                                                                }
                                                             }
-                                                        }
                                                     >
                                                         <span>{ income }</span>
                                                     </div>
@@ -47,14 +48,15 @@ function MyDate( { status, date, income, expense })
                                             {
                                                 elments.push
                                                 (
-                                                    <div className={ COMMON_COLOR_CLASS.RED }
-                                                        onClick=
-                                                        {
-                                                        () =>
-                                                        {
-                                                                console.log('지출 총계!')
-                                                        }
-                                                        }
+                                                    <div    key={ 'cal_date_expense' }
+                                                            className={ COMMON_COLOR_CLASS.RED }
+                                                            onClick=
+                                                            {
+                                                                () =>
+                                                                {
+                                                                        console.log('지출 총계!')
+                                                                }
+                                                            }
                                                     >
                                                         { expense }
                                                     </div>

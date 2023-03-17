@@ -7,6 +7,13 @@ export default ( { children } ) =>
     // 토큰 정보
     const [token, setToken] = useState( JSON.parse(sessionStorage.getItem('ref-token')) );
 
+    // 금액 State
+    const [money, setMoney] = useState(
+    {
+         balance : 0
+        ,expense : 0
+    })
+
     // 공통 팝업 State
     const [modal, setModal] = useState(
     { 
@@ -31,7 +38,7 @@ export default ( { children } ) =>
                 }
                 ,isConfirm : false 
                 ,callBack : ( res ) => {}
-            })) 
+            }))
         }
     });
 
@@ -40,6 +47,7 @@ export default ( { children } ) =>
         {
             {
                  GLOBAL_TOKEN : { token, setToken }
+                ,GLOBAL_MONEY : { money, setMoney }
                 ,GLOBAL_MODAL : { modal, setModal }
             }
         }>

@@ -1,9 +1,12 @@
-import React, { useEffect, useState } from 'react';
-
+import React, { useEffect, useState, useContext } from 'react';
+import { CommaFormatter } from 'module/Common';
+import { GlobalContext } from 'context/GlobalContext';
 import { MDBIcon, MDBInput, MDBInputGroup, MDBCol } from 'mdb-react-ui-kit';
 
 function Header()
 {
+    const { GLOBAL_MONEY } = useContext(GlobalContext);
+    
     return (
         <>
             <MDBCol className='col-9 d-flex justify-content-center align-items-center'>
@@ -13,7 +16,7 @@ function Header()
                         <span className='input-group-text'>잔액</span>
                         <input className='form-control' placeholder='' type='number' disabled/>
                         <span className='input-group-text'>지출</span>
-                        <input className='form-control' placeholder='' type='number' disabled/>
+                        <input className='form-control text-end' type='text' value={ CommaFormatter(GLOBAL_MONEY.money.expense) } disabled/>
                     </MDBInputGroup>
                 </div>
             </MDBCol>
