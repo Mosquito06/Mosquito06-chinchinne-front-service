@@ -1,7 +1,8 @@
 // Query Keys
 export const COMMON_QUERY_KEYS = 
 {
-    SEARCH_ACCOUNT : 'search_account'
+     SEARCH_ACCOUNT : 'search_account'
+    ,SEARCH_MEMO : 'search_memo'
 }
 
 // 공통 텍스트
@@ -9,6 +10,13 @@ export const COMMON_TEXT =
 {
      YEAR : '년'
     ,MONTH : '월'
+}
+
+// 공통 YN
+export const COMMON_YN = 
+{
+     YES : 'YES'
+    ,NO : 'NO'
 }
 
 // 공통 색상 클래스
@@ -40,4 +48,3 @@ export const COMMON_ERROR_CODE =
     ,NOT_FOUND_TOKEN : 'NOT_FOUND_TOKEN'
     ,EXPIRE_TOKEN : 'EXPIRE_TOKEN'
 }
-

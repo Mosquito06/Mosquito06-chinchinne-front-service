@@ -6,24 +6,25 @@ import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBSpinner, MDBBtn } from 'mdb-r
 
 function Login()
 {
-    // context
+    // Global State
     const { GLOBAL_TOKEN } = useContext(GlobalContext);
     
     // Naavigate
     const navigate = useNavigate();
 
-    // login State
-    const [login, setLogin] = useState(
-    {
-         email : ''
-        ,password : ''
-    })
-
+    // Login Ref
     const loginRef = 
     {
          email : useRef()
         ,password : useRef()
     }
+    
+    // Login State
+    const [login, setLogin] = useState(
+    {
+         email : ''
+        ,password : ''
+    })
 
     const onLoginChanged = e =>
     {
@@ -34,7 +35,7 @@ function Login()
         }))
     }
     
-    // 로그인 Query
+    // Login Query
     const SignInQuery = LoginApi.useSignIn(
     {
         queryOptions :
