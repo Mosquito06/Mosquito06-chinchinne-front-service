@@ -19,6 +19,14 @@ export const COMMON_YN =
     ,NO : 'NO'
 }
 
+// 공통 상태
+export const COMMON_STATUS = 
+{
+     CREATE : 'create'
+    ,UPDATE : 'update'
+    ,DELETE : 'delete'
+}
+
 // 공통 색상 클래스
 export const COMMON_COLOR_CLASS =
 {

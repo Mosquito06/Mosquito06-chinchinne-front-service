@@ -15,14 +15,14 @@ export default
             ,fn : params =>
             {
                 const queryKey = params.queryKey;
-                const pathString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].pathString ) ? queryKey[1].pathString : '';
-                const queryString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].queryString ) ? queryKey[1].queryString : '';
+                const pathString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].pathString ) ? '/' + queryKey[1].pathString : '';
+                const queryString = ( queryKey.length > 0 && queryKey[1] && queryKey[1].queryString ) ? '?' + queryKey[1].queryString : '';
                 const axiosParams = ( queryKey.length > 0 && queryKey[1] && queryKey[1].params ) ? queryKey[1].params : null;
 
                 return axiosUtil.axios(
                 { 
                      method : axiosUtil.METHOD.GET
-                    ,url : '/account-service/' + pathString + queryString
+                    ,url : '/account-service' + pathString + queryString
                     ,params : axiosParams
                     ,option : 
                     { 

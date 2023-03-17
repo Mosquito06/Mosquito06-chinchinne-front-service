@@ -1,23 +1,40 @@
-import { useEffect, useState } from 'react';
-import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { COMMON_YN } from 'module/CommonCode';
+import { useEffect, useState, useContext } from 'react';
+import MemoApi from 'api/MemoApi';
+import { useQueryClient   } from 'react-query';
+import { GlobalContext } from 'context/GlobalContext';
+import { COMMON_YN, COMMON_STATUS, COMMON_QUERY_KEYS } from 'module/CommonCode';
 
-function MyMemo({ id, contents, isComplete })
+function MyMemo({ id, contents, isComplete, onCancelClicked })
 {
+    // Global State
+    const { GLOBAL_MODAL } = useContext(GlobalContext);
+    
+    // Query Client
+    const queryClient = useQueryClient();
+
     // Memo State
     const [memo, setMemo] = useState(
     {
          id : id ?? ''
-        ,isEdit : id ? false : true
+        ,isNew : id.toString().split('_')[0] === COMMON_STATUS.CREATE ? true : false
+        ,isEdit : id.toString().split('_')[0] === COMMON_STATUS.CREATE ? true : false
         ,isComplete : isComplete ?? false 
         ,content : contents ?? ''
         ,snapShop : contents ?? ''
     })
 
-    const onMemoChanged = () =>
+    // Add Memo Query
+    const AddMemoQuery = MemoApi.useAddMemo(
     {
-
-    }
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_MEMO]);
+            }
+            ,settle : () => {}
+        }
+    })
 
     return (
         <div className="form-check ms-2 d-flex align-items-center position-relative">
@@ -67,16 +84,47 @@ function MyMemo({ id, contents, isComplete })
                                 <div className='w-auto position-absolute end-0'>
                                     <button type="button" 
                                             className="btn btn-primary"
+                                            disabled={ AddMemoQuery.isLoading ? true : false }
                                             onClick=
                                             {
                                                 () =>
                                                 {
-                                                    setMemo( prevState => (
+                                                    if( memo.isNew )
                                                     {
-                                                        ...prevState
-                                                        ,isEdit : false
-                                                        ,snapShop : memo.content
-                                                    })) 
+                                                        if( !memo.content )
+                                                        {
+                                                            GLOBAL_MODAL.setModal( prevState => (
+                                                            {
+                                                                 ...prevState
+                                                                ,isVisible : true
+                                                                ,text : 
+                                                                {
+                                                                    ...prevState.text
+                                                                    ,title : 'Alert'
+                                                                    ,contents : '저장할 내용을 입력하세요.'
+                                                                }
+                                                                ,isConfirm : false
+                                                                ,callBack : ( res ) => { GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); }
+                                                            }))
+
+                                                            return;
+                                                        }
+                                                        
+                                                        
+                                                        AddMemoQuery.mutate( 
+                                                        {  
+                                                            memo : memo.content
+                                                        })
+                                                    }
+                                                    else
+                                                    {
+                                                        setMemo( prevState => (
+                                                        {
+                                                            ...prevState
+                                                            ,isEdit : false
+                                                            ,snapShop : memo.content
+                                                        }))
+                                                    }
                                                 }
                                             }
                                     >
@@ -88,12 +136,19 @@ function MyMemo({ id, contents, isComplete })
                                             {
                                                 () =>
                                                 {
-                                                    setMemo( prevState => (
+                                                    if( memo.isNew )
                                                     {
-                                                        ...prevState
-                                                        ,isEdit : false
-                                                        ,content : prevState.snapShop
-                                                    }))
+                                                        onCancelClicked( memo.id );
+                                                    }
+                                                    else
+                                                    {
+                                                        setMemo( prevState => (
+                                                        {
+                                                            ...prevState
+                                                            ,isEdit : false
+                                                            ,content : prevState.snapShop
+                                                        }))
+                                                    }
                                                 }
                                             }
                                     >
