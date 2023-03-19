@@ -30,22 +30,3 @@
 3. 구현(예정) 기능
   * 로그인
   * 한달 예산 설정, 구매 리스트 관리, 지출 통계 시각화 등의 서비스 개발 예정
-
-## :open_file_folder: 폴더 구성
-> public
->
-> src
->
->  > api
->  >
->  > components
->  >
->  > context
->  >
->  > module
->  >
->  > App.css
->  >
->  > App.js
->  >
->  > index.js
