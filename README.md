@@ -34,7 +34,7 @@
 ## :open_file_folder: 폴더 구성
 - public
 - src
- - api
+  - api
  - components
  - context
  - module
