@@ -5,7 +5,9 @@
 <img src="https://user-images.githubusercontent.com/32257949/226171436-8bbc95b4-081a-48a6-b256-dd5288043cb8.jpeg"  width="750" height="370">
 <img src="https://user-images.githubusercontent.com/32257949/226171446-79f0ebda-7b24-4a45-97f1-44e97ce3d4fe.jpeg"  width="750" height="370">
 2. 기술 스택 및 설명
- * <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
+<img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
+<img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=React&logoColor=white">
+<img src="https://img.shields.io/badge/React Query-FF4154?style=for-the-badge&logo=React Query&logoColor=white">
  * (서비스 기반) 분산 아키텍처로 구상하여 개발 진행 중이며 화면단 서비스
 3. 구현(예정) 기능
  * 로그인
