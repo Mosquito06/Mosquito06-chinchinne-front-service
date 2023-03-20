@@ -140,6 +140,7 @@ function MyCalendar( { year, month, time })
                             <MyDate key={ 'cal_date_' + ( !isStart ? ( month - 1 ) : month ) + '_' + date.list[i] } 
                                     status={ !isStart ? COMMON_DATE_STATUS.PREV : COMMON_DATE_STATUS.CUR }
                                     date={ date.list[i] }
+                                    time={ isStart ? new Date(year, month, date.list[i]).getTime() : 0 }
                                     income={ displayData.length > 0 ? displayData[0].incomeTotal : null }
                                     expense={ displayData.length > 0 ? displayData[0].expenseTotal : null }
                             />

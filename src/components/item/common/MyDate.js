@@ -1,3 +1,5 @@
+import React, { useRef, useState, useContext, useEffect } from 'react';
+import MyDetailModal from 'components/modal/MyDetailModal';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { COMMON_DATE_STATUS, COMMON_COLOR_CLASS } from 'module/CommonCode';
 
@@ -5,11 +7,22 @@ import { COMMON_DATE_STATUS, COMMON_COLOR_CLASS } from 'module/CommonCode';
 // 1. 달력 내용에 수입 총계(파랑), 지출 총계(빨강) 표현
 // 2. 총계 클릭 시, 내용 팝업 표출
 
-function MyDate( { status, date, income, expense })
+function MyDate( { status, date, time, income, expense })
 {
+    const [visible, setVisible] = useState( false );
+    
     return (
-        <MDBCol className={ status === COMMON_DATE_STATUS.CUR ? COMMON_COLOR_CLASS.BLACK : COMMON_COLOR_CLASS.BLACK_50 }>
-             <MDBContainer className='h-100 position-relative text-center'>
+        <MDBCol className={ status === COMMON_DATE_STATUS.CUR ? COMMON_COLOR_CLASS.BLACK : COMMON_COLOR_CLASS.BLACK_50 }
+                style={{'cursor' : 'pointer'}}
+                onClick=
+                {
+                    () =>
+                    {
+                        setVisible(true);
+                    }
+                }
+        >   
+            <MDBContainer className='h-100 position-relative text-center'>
                 <MDBRow className='justify-content-center'>
                     { date }
                 </MDBRow>
@@ -19,7 +32,7 @@ function MyDate( { status, date, income, expense })
                         if( status === COMMON_DATE_STATUS.CUR )
                         {
                             return (
-                                <MDBRow className='position-absolute bottom-0 text-right' style={{'cursor' : 'pointer'}}>
+                                <MDBRow className='position-absolute bottom-0 text-right' >
                                     {
                                         (() =>
                                         {
@@ -31,13 +44,6 @@ function MyDate( { status, date, income, expense })
                                                 (
                                                     <div    key={ 'cal_date_sum' } 
                                                             className={ COMMON_COLOR_CLASS.BLUE } 
-                                                            onClick=
-                                                            {
-                                                                () =>
-                                                                {
-                                                                    console.log('수입 총계!')
-                                                                }
-                                                            }
                                                     >
                                                         <span>{ income }</span>
                                                     </div>
@@ -50,13 +56,6 @@ function MyDate( { status, date, income, expense })
                                                 (
                                                     <div    key={ 'cal_date_expense' }
                                                             className={ COMMON_COLOR_CLASS.RED }
-                                                            onClick=
-                                                            {
-                                                                () =>
-                                                                {
-                                                                        console.log('지출 총계!')
-                                                                }
-                                                            }
                                                     >
                                                         { expense }
                                                     </div>
@@ -72,7 +71,9 @@ function MyDate( { status, date, income, expense })
 
                     })()
                 }
-             </MDBContainer>
+            </MDBContainer>
+
+            <MyDetailModal isVisible={ visible } setVisible={ setVisible } time={ time }/>
         </MDBCol>
     )
 }

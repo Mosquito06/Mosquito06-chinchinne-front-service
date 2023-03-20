@@ -36,7 +36,7 @@ function Left()
                                          {
                                             e =>
                                             {
-                                                const curDate = new Date(new Date().setMonth(Number(e.target.value)));
+                                                const curDate = new Date( calendar.year, Number(e.target.value));
                                                 
                                                 setCalendar( prevState => (
                                                 {
