@@ -15,7 +15,11 @@
   * (계획)CQRS 패턴을 구현하여 Query 요청은 MongoDB에서 조회
   * (계획)화면단 이벤트를 Elasticsearch에 저장 및 시각화 처리
 
-2. 기술 스택 및 설명
+2. 구현 화면
+<img src="https://user-images.githubusercontent.com/32257949/226219670-dcc3a309-f127-4f1c-95a3-fa6f6b3167bb.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/226219674-b3e4cd78-b4f9-4b34-a127-da81910cbfad.png"  width="750" height="370">
+
+3. 기술 스택 및 설명
 <div align="left">
   <img src="https://img.shields.io/badge/Javascript-F7DF1E?style=for-the-badge&logo=Javascript&logoColor=white">
   <img src="https://img.shields.io/badge/Bootstrap-7952B3?style=for-the-badge&logo=Bootstrap&logoColor=white">
@@ -27,6 +31,6 @@
   * 한달 예산을 설정하고, 수입과 지출을 관리할 목적으로 개발
   * 카테고리를 지정하여 수입 및 지출 내역을 저장하고, 해당 내역은 통계로 시각화 처리
 
-3. 구현(예정) 기능
+4. 구현(예정) 기능
   * 로그인
   * 한달 예산 설정, 구매 리스트 관리, 지출 통계 시각화 등의 서비스 개발 예정
