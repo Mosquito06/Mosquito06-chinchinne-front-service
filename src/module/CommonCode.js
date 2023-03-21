@@ -1,7 +1,8 @@
 // Query Keys
 export const COMMON_QUERY_KEYS = 
 {
-     SEARCH_ACCOUNT : 'search_account'
+     SEARCH_ACCOUNTS : 'search_accounts'
+    ,SEARCH_ACCOUNT : 'search_account'
     ,SEARCH_MEMO : 'search_memo'
 }
 
@@ -25,6 +26,13 @@ export const COMMON_STATUS =
      CREATE : 'create'
     ,UPDATE : 'update'
     ,DELETE : 'delete'
+}
+
+// 수입/지출 공통 코드
+export const COMMON_ACCOUNT_STATUS = 
+{
+     INCOME : 'INCOME'
+    ,EXPENSE : 'EXPENSE'
 }
 
 // 공통 색상 클래스

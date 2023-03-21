@@ -22,7 +22,7 @@ export default
                 return axiosUtil.axios(
                 { 
                      method : axiosUtil.METHOD.GET
-                    ,url : '/memo-service' + pathString + queryString
+                    ,url : '/memo-service' + pathString + '/memo' + queryString
                     ,params : axiosParams
                     ,option : 
                     { 

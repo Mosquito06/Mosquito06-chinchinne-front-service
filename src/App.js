@@ -32,8 +32,8 @@ function App()
             </Router>
           
           
-            <GlobalModal />
             <MyDetailModal />
+            <GlobalModal />
           </GlobalContextProvider>
       </QueryClientProvider>
   );

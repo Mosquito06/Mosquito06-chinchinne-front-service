@@ -11,7 +11,7 @@ function MyDiary()
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
     
     // Query State
-    const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_MEMO, { pathString : GLOBAL_TOKEN.token.uuid + '/memo'} ])
+    const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_MEMO, { pathString : GLOBAL_TOKEN.token.uuid } ])
 
     // Diary State
     const [diary, setDiary] = useState([]);
