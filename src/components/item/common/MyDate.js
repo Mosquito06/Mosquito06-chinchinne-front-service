@@ -1,7 +1,7 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import MyDetailModal from 'components/modal/MyDetailModal';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { COMMON_DATE_STATUS, COMMON_COLOR_CLASS } from 'module/CommonCode';
+import { GlobalContext } from 'context/GlobalContext';
 
 // 친친 요구사항 
 // 1. 달력 내용에 수입 총계(파랑), 지출 총계(빨강) 표현
@@ -9,8 +9,8 @@ import { COMMON_DATE_STATUS, COMMON_COLOR_CLASS } from 'module/CommonCode';
 
 function MyDate( { status, date, time, income, expense })
 {
-    const [visible, setVisible] = useState( false );
-    
+    const { GLOBAL_MODAL } = useContext(GlobalContext);
+
     return (
         <MDBCol className={ status === COMMON_DATE_STATUS.CUR ? COMMON_COLOR_CLASS.BLACK : COMMON_COLOR_CLASS.BLACK_50 }
                 style={{'cursor' : 'pointer'}}
@@ -18,7 +18,13 @@ function MyDate( { status, date, time, income, expense })
                 {
                     () =>
                     {
-                        setVisible(true);
+                        GLOBAL_MODAL.setDetail( prevState => (
+                        {
+                             ...prevState
+                            ,isVisible : true
+                            ,time : time
+                            ,callBack : ( res ) => { GLOBAL_MODAL.setDetail( prevState => ({ ...prevState, isVisible : false })); }
+                        }))
                     }
                 }
         >   
@@ -72,8 +78,6 @@ function MyDate( { status, date, time, income, expense })
                     })()
                 }
             </MDBContainer>
-
-            <MyDetailModal isVisible={ visible } setVisible={ setVisible } time={ time }/>
         </MDBCol>
     )
 }

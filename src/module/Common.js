@@ -1,4 +1,5 @@
 import Axios from 'axios';
+import moment from 'moment';
 import { useContext } from 'react';
 import { GlobalContext } from 'context/GlobalContext';
 import { useQuery, useQueries, useMutation  } from 'react-query';
@@ -150,4 +151,10 @@ export const queryUtil =
 export const CommaFormatter = ( value ) =>
 {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")
+}
+
+// 데이트 포맷
+export const DateFormatter = (value, format) =>
+{
+    return moment(value).format(format);
 }

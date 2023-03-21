@@ -11,6 +11,7 @@ import PrivateRoute from 'components/common/PrivateRoute';
 import PublicRoute from 'components/common/PublicRoute';
 
 import GlobalModal from 'components/common/GlobalModal';
+import MyDetailModal from 'components/modal/MyDetailModal';
 import Login from 'components/menu/Login';
 import Main from 'components/menu/Main';
 
@@ -20,19 +21,20 @@ function App()
 {
   return (
       <QueryClientProvider client={ queryClient }>
-        <ReactQueryDevtools initialIsOpen={true} />
-        <GlobalContextProvider>
+          <ReactQueryDevtools initialIsOpen={true} />
+          <GlobalContextProvider>
 
-        <Router>
-          <Routes>
-            <Route path="/" element={<PrivateRoute component={ Main } />}/>
-            <Route path="/login" element={<PublicRoute component={ Login } restricted={true}/>}/>
-          </Routes>
-        </Router>
-        
-        
-        <GlobalModal />
-        </GlobalContextProvider>
+            <Router>
+              <Routes>
+                <Route path="/" element={<PrivateRoute component={ Main } />}/>
+                <Route path="/login" element={<PublicRoute component={ Login } restricted={true}/>}/>
+              </Routes>
+            </Router>
+          
+          
+            <GlobalModal />
+            <MyDetailModal />
+          </GlobalContextProvider>
       </QueryClientProvider>
   );
 }
