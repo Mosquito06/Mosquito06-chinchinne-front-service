@@ -12,7 +12,7 @@ function Main()
             <MDBRow style={{ height : '5%'}}>
                 <Header />
             </MDBRow>
-            <MDBRow className='' style={{ height : '95%'}}>
+            <MDBRow className='pt-2 pt-lg-3' style={{ height : '95%'}}>
                 <MDBCol className='col-9' style={{ height : '100%'}}>
                     <Left />
                 </MDBCol>

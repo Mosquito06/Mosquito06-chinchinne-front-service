@@ -1,7 +1,8 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
+import { CommaFormatter } from 'module/Common';
+import { GlobalContext } from 'context/GlobalContext';
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { COMMON_DATE_STATUS, COMMON_COLOR_CLASS } from 'module/CommonCode';
-import { GlobalContext } from 'context/GlobalContext';
 
 // 친친 요구사항 
 // 1. 달력 내용에 수입 총계(파랑), 지출 총계(빨강) 표현
@@ -51,7 +52,7 @@ function MyDate( { status, date, time, income, expense })
                                                     <div    key={ 'cal_date_sum' } 
                                                             className={ COMMON_COLOR_CLASS.BLUE } 
                                                     >
-                                                        <span>{ income }</span>
+                                                        <span>{ CommaFormatter(income) }</span>
                                                     </div>
                                                 )
                                             }
@@ -63,7 +64,7 @@ function MyDate( { status, date, time, income, expense })
                                                     <div    key={ 'cal_date_expense' }
                                                             className={ COMMON_COLOR_CLASS.RED }
                                                     >
-                                                        { expense }
+                                                        { CommaFormatter(expense) }
                                                     </div>
                                                 )
                                             }

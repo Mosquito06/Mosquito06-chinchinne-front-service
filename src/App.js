@@ -11,7 +11,7 @@ import PrivateRoute from 'components/common/PrivateRoute';
 import PublicRoute from 'components/common/PublicRoute';
 
 import GlobalModal from 'components/common/GlobalModal';
-import MyDetailModal from 'components/modal/MyDetailModal';
+import MyAccountModal from 'components/modal/MyAccountModal';
 import Login from 'components/menu/Login';
 import Main from 'components/menu/Main';
 
@@ -32,7 +32,7 @@ function App()
             </Router>
           
           
-            <MyDetailModal />
+            <MyAccountModal />
             <GlobalModal />
           </GlobalContextProvider>
       </QueryClientProvider>
