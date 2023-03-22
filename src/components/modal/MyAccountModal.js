@@ -10,7 +10,7 @@ import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBM
 
 export default ( ) => 
 {
-    // context
+    // Global State
     const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
 
     // show State

@@ -3,6 +3,7 @@ export const COMMON_QUERY_KEYS =
 {
      SEARCH_ACCOUNTS : 'search_accounts'
     ,SEARCH_ACCOUNT : 'search_account'
+    ,SEARCH_CATEGORIES : 'search_categories'
     ,SEARCH_MEMO : 'search_memo'
 }
 
