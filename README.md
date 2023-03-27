@@ -18,6 +18,8 @@
 2. 구현 화면
 <img src="https://user-images.githubusercontent.com/32257949/226219670-dcc3a309-f127-4f1c-95a3-fa6f6b3167bb.png"  width="750" height="370">
 <img src="https://user-images.githubusercontent.com/32257949/226219674-b3e4cd78-b4f9-4b34-a127-da81910cbfad.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/226805831-dcf1bb07-84ba-482b-a6e7-b01c1fe32754.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/226805828-6512b7bd-e5e5-453a-843f-d39359cd0f70.png"  width="750" height="370">
 
 3. 기술 스택 및 설명
 <div align="left">
