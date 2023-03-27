@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { axiosUtil, queryUtil } from 'module/Common';
 import { GlobalContext } from 'context/GlobalContext';
-import { COMMON_ERROR_CODE } from 'module/CommonCode';
+import { COMMON_ERROR_CODE, COMMON_ERROR_MSG } from 'module/CommonCode';
 
 export default
 {
@@ -174,7 +174,7 @@ export default
                         {
                             ...prevState.text
                             ,title : 'Alert'
-                            ,contents : e.response.data.message
+                            ,contents : e.response.data.status === COMMON_ERROR_CODE.BAD_REQUEST ? COMMON_ERROR_MSG.BAD_REQUEST : e.response.data.message
                         }
                         ,isConfirm : false
                         ,callBack : ( res ) => { GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); }

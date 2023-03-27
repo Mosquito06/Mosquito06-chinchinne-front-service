@@ -60,10 +60,17 @@ export const COMMON_DATE_STATUS =
 // 공통 에러 코드
 export const COMMON_ERROR_CODE =
 {
-     UNKNOWN_MEMBER : 'UNKNOWN_MEMBER'
-    ,INCORRECT_PASSWORD : 'INCORRECT_PASSWORD'
-    ,NOT_FOUND_TOKEN : 'NOT_FOUND_TOKEN'
-    ,EXPIRE_TOKEN : 'EXPIRE_TOKEN'
+     NOT_FOUND_TOKEN : 1000
+    ,EXPIRE_TOKEN : 1001
+    ,UNKNOWN_MEMBER : 1010
+    ,INCORRECT_PASSWORD : 1011
+    ,BAD_REQUEST : 400
+}
+
+// 공통 에러 메시지
+export const COMMON_ERROR_MSG =
+{
+     BAD_REQUEST : '잘못된 요청입니다.'
 }
 
 // 공통 표현식 타입
