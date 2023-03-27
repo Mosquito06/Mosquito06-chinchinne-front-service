@@ -1,9 +1,10 @@
 import Axios from 'axios';
 import moment from 'moment';
 import { useContext } from 'react';
+import VerEx from 'verbal-expressions';
 import { GlobalContext } from 'context/GlobalContext';
 import { useQuery, useQueries, useMutation  } from 'react-query';
-import { COMMON_ERROR_CODE } from 'module/CommonCode';
+import { COMMON_ERROR_CODE, COMMON_REG_EXP_CODE } from 'module/CommonCode';
 
 export const axiosUtil = 
 {
@@ -185,4 +186,15 @@ export const CommaFormatter = ( value ) =>
 export const DateFormatter = (value, format) =>
 {
     return moment(value).format(format);
+}
+
+// 정규 표현식 Returner
+export const RegExpReturner = ( type ) =>
+{
+    switch( type )
+    {
+        case COMMON_REG_EXP_CODE.ONLY_NUM :
+            
+            //return VerEx().startOfLine().range('0', '9').
+    }
 }

@@ -65,3 +65,9 @@ export const COMMON_ERROR_CODE =
     ,NOT_FOUND_TOKEN : 'NOT_FOUND_TOKEN'
     ,EXPIRE_TOKEN : 'EXPIRE_TOKEN'
 }
+
+// 공통 표현식 타입
+export const COMMON_REG_EXP_CODE =
+{
+    ONLY_NUM : 1
+}
