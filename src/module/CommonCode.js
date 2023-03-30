@@ -3,6 +3,7 @@ export const COMMON_QUERY_KEYS =
 {
      SEARCH_ACCOUNTS : 'search_accounts'
     ,SEARCH_ACCOUNT : 'search_account'
+    ,SEARCH_ACCOUNT_DETAIL : 'search_account_detail'
     ,SEARCH_CATEGORIES : 'search_categories'
     ,SEARCH_MEMO : 'search_memo'
 }
@@ -65,12 +66,6 @@ export const COMMON_ERROR_CODE =
     ,UNKNOWN_MEMBER : 1010
     ,INCORRECT_PASSWORD : 1011
     ,BAD_REQUEST : 400
-}
-
-// 공통 에러 메시지
-export const COMMON_ERROR_MSG =
-{
-     BAD_REQUEST : '잘못된 요청입니다.'
 }
 
 // 공통 표현식 타입

@@ -10,7 +10,7 @@ import { COMMON_DATE_STATUS, COMMON_QUERY_KEYS, COMMON_ACCOUNT_STATUS } from 'mo
 import { MDBListGroup, MDBListGroupItem, MDBInput, MDBTextArea } from 'mdb-react-ui-kit';
 import { MDBBtn, MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter  } from 'mdb-react-ui-kit';
 
-export default ( { isVisible, setVisible, parentShow } ) => 
+export default ( { isVisible, setVisible, target, setTarget, parentShow } ) => 
 {
     // Global State
     const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
@@ -27,7 +27,8 @@ export default ( { isVisible, setVisible, parentShow } ) =>
     // Account State
     const [account, setAccount] = useState(
     {
-         category : -1
+         accountId : target
+        ,category : -1
         ,status : -1
         ,memo : ''
         ,amount : ''
@@ -45,6 +46,27 @@ export default ( { isVisible, setVisible, parentShow } ) =>
             }
             ,settle : () => {}
             ,isEnabled : isVisible ? true : false
+        }
+    })
+
+    const SearchAccountQuery = AccountApi.useSearchAccountDetail(
+    {
+        queryOptions : 
+        {
+             keys: isVisible ? [ COMMON_QUERY_KEYS.SEARCH_ACCOUNT_DETAIL, { pathString : GLOBAL_TOKEN.token.uuid + '/' + GLOBAL_MODAL.detail.time + '/account/' + target } ] : []
+            ,success : ( res ) =>
+            {
+                setAccount( prevState => (
+                {
+                     ...prevState
+                    ,category : Number(res.data.category)
+                    ,status : res.data.status
+                    ,memo : res.data.memo
+                    ,amount : res.data.amount
+                }))
+            }
+            ,settle : () => {}
+            ,isEnabled : isVisible && target > 0
         }
     })
 
@@ -101,11 +123,14 @@ export default ( { isVisible, setVisible, parentShow } ) =>
         {
             setAccount(
             {
-                 category : -1
+                 accountId : 0
+                ,category : -1
                 ,status : -1
                 ,memo : ''
                 ,amount : ''
             });
+
+            setTarget( 0 );
         }
 
     }, [ isVisible ])
@@ -192,44 +217,94 @@ export default ( { isVisible, setVisible, parentShow } ) =>
                         >
                             취소
                         </MDBBtn>
-                        <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
-                                onClick=
-                                { 
-                                    () => 
-                                    { 
-                                        if( account.category === -1 )
-                                        {
-                                            compRef.current[0].focus();
-                                            
-                                            return;
-                                        }
+                        {
+                            (() =>
+                            {
+                                // 수정
+                                if( target > 0 )
+                                {
+                                    return (
+                                        <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
+                                                onClick=
+                                                { 
+                                                    () => 
+                                                    { 
+                                                        if( account.category === -1 )
+                                                        {
+                                                            compRef.current[0].focus();
+                                                            
+                                                            return;
+                                                        }
 
-                                        if( account.status === -1 )
-                                        {
-                                            compRef.current[1].focus();
-                                            
-                                            return;
-                                        }
+                                                        if( account.status === -1 )
+                                                        {
+                                                            compRef.current[1].focus();
+                                                            
+                                                            return;
+                                                        }
 
-                                        if( !account.amount )
-                                        {
-                                            compRef.current[2].focus();
-                                            
-                                            return;
-                                        }
-                                        
-                                        AddAccountQuery.mutate( 
-                                        {
-                                             category : account.category
-                                            ,status : account.status
-                                            ,memo : account.memo
-                                            ,amount : account.amount
-                                        })
-                                    } 
+                                                        if( !account.amount )
+                                                        {
+                                                            compRef.current[2].focus();
+                                                            
+                                                            return;
+                                                        }
+                                                        
+                                                      
+                                                    } 
+                                                }
+                                        >
+                                            수정
+                                        </MDBBtn>
+                                    )
                                 }
-                        >
-                            등록
-                        </MDBBtn>
+                                // 등록
+                                else
+                                {
+                                    return (
+                                        <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
+                                                onClick=
+                                                { 
+                                                    () => 
+                                                    { 
+                                                        if( account.category === -1 )
+                                                        {
+                                                            compRef.current[0].focus();
+                                                            
+                                                            return;
+                                                        }
+
+                                                        if( account.status === -1 )
+                                                        {
+                                                            compRef.current[1].focus();
+                                                            
+                                                            return;
+                                                        }
+
+                                                        if( !account.amount )
+                                                        {
+                                                            compRef.current[2].focus();
+                                                            
+                                                            return;
+                                                        }
+                                                        
+                                                        AddAccountQuery.mutate( 
+                                                        {
+                                                            category : account.category
+                                                            ,status : account.status
+                                                            ,memo : account.memo
+                                                            ,amount : account.amount
+                                                        })
+                                                    }
+                                                }
+                                        >
+                                            등록
+                                        </MDBBtn>
+                                    )
+                                }
+
+                            })()
+                        }
                     </MDBModalFooter>
                 </MDBModalContent>
             </MDBModalDialog>

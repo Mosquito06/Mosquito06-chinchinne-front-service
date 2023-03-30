@@ -13,12 +13,16 @@ export default ( ) =>
     // Global State
     const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
 
-    // show State
+    // Show State
     const [show, setShow] = useState( false );
 
-    // add State
+    // Visible State
     const [visible, setVisible] = useState( false );
 
+    // Target State
+    const [target, setTarget] = useState( 0 );
+
+    // Detail State
     const [detail, setDetail] = useState(
     {
          income : []
@@ -111,7 +115,24 @@ export default ( ) =>
                                                                                 detail.income.map( ( row, rowIdx ) => 
                                                                                 {
                                                                                     return (
-                                                                                        <MDBListGroupItem className='d-flex justify-content-between align-items-center' key={ COMMON_ACCOUNT_STATUS.INCOME + '_' + idx + '_' + rowIdx }>
+                                                                                        <MDBListGroupItem   className='d-flex justify-content-between align-items-center' 
+                                                                                                            key={ COMMON_ACCOUNT_STATUS.INCOME + '_' + idx + '_' + rowIdx }
+                                                                                                            style={{'cursor': 'pointer'}}
+                                                                                                            onClick=
+                                                                                                            {
+                                                                                                                () =>
+                                                                                                                {
+                                                                                                                    setTarget(row.accountId);
+                                                                                                                    
+                                                                                                                    setShow(false);
+                                                            
+                                                                                                                    setTimeout(() => 
+                                                                                                                    {
+                                                                                                                        setVisible(true);
+                                                                                                                    }, 400);
+                                                                                                                }
+                                                                                                            }
+                                                                                        >
                                                                                             <div>
                                                                                                 <div className='fw-bold'>{ CommaFormatter(row.amount) }</div>
                                                                                                 <div className='text-muted'>{ row.memo }</div>
@@ -137,7 +158,24 @@ export default ( ) =>
                                                                                 detail.expense.map( ( row, rowIdx ) => 
                                                                                 {
                                                                                     return (
-                                                                                        <MDBListGroupItem className='d-flex justify-content-between align-items-center' key={ COMMON_ACCOUNT_STATUS.EXPENSE + '_' + idx + '_' + rowIdx }>
+                                                                                        <MDBListGroupItem   className='d-flex justify-content-between align-items-center' 
+                                                                                                            key={ COMMON_ACCOUNT_STATUS.EXPENSE + '_' + idx + '_' + rowIdx }
+                                                                                                            style={{'cursor': 'pointer'}}
+                                                                                                            onClick=
+                                                                                                            {
+                                                                                                                () =>
+                                                                                                                {
+                                                                                                                    setTarget(row.accountId);
+                                                                                                                    
+                                                                                                                    setShow(false);
+                                                            
+                                                                                                                    setTimeout(() => 
+                                                                                                                    {
+                                                                                                                        setVisible(true);
+                                                                                                                    }, 400);
+                                                                                                                }
+                                                                                                            }
+                                                                                        >
                                                                                             <div>
                                                                                                 <div className='fw-bold'>{ CommaFormatter(row.amount) }</div>
                                                                                                 <div className='text-muted'>{ row.memo }</div>
@@ -225,7 +263,7 @@ export default ( ) =>
                 </MDBModalDialog>
             </MDBModal>
 
-            <MyAddAccountModal isVisible={visible} setVisible={setVisible} parentShow={ setShow }/>
+            <MyAddAccountModal isVisible={visible} setVisible={setVisible} target={target} setTarget={ setTarget } parentShow={ setShow }/>
         </>
     )
 }
