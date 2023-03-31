@@ -27,7 +27,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
     // Account State
     const [account, setAccount] = useState(
     {
-         accountId : target
+         accountId : 0
         ,category : -1
         ,status : -1
         ,memo : ''
@@ -91,6 +91,48 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
         }
     })
 
+    // Update Account Query
+    const UpdateAccountQuery = AccountApi.useUpdateAccount(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
+
+                setVisible(false);
+                                            
+                setTimeout(() => 
+                {
+                    parentShow(true);
+                }, 400);
+            }
+            ,settle : () => {}
+        }
+    })
+
+    // Delete Account Query
+    const DeleteAccountQuery = AccountApi.useDeleteAccount(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
+
+                setVisible(false);
+                                            
+                setTimeout(() => 
+                {
+                    parentShow(true);
+                }, 400);
+            }
+            ,settle : () => {}
+        }
+    })
+
     // Account Changed Events
     const onAccountChanged = (e) => 
     {
@@ -132,6 +174,17 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
 
             setTarget( 0 );
         }
+        else
+        {
+            if( target )
+            {
+                setAccount( prevState => (
+                {
+                    ...prevState
+                    ,accountId : target
+                }))
+            }
+        }
 
     }, [ isVisible ])
     
@@ -140,7 +193,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                     setShow={ setVisible }
                     closeOnEsc={ true }
                     tabIndex='-1'
-                    // staticBackdrop={ true }
+                    staticBackdrop={ true }
 
         >
             <MDBModalDialog size="lg" >
@@ -224,38 +277,62 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                                 if( target > 0 )
                                 {
                                     return (
-                                        <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
-                                                onClick=
-                                                { 
-                                                    () => 
+                                        <>
+                                            <MDBBtn color='danger'
+                                                    disabled={ AddAccountQuery.isLoading ? true : false }
+                                                    onClick=
                                                     { 
-                                                        if( account.category === -1 )
-                                                        {
-                                                            compRef.current[0].focus();
-                                                            
-                                                            return;
-                                                        }
+                                                        () => 
+                                                        { 
+                                                            DeleteAccountQuery.mutate( 
+                                                            {
+                                                                accountId : account.accountId
+                                                            })
+                                                        } 
+                                                    }
+                                            >
+                                                삭제
+                                            </MDBBtn>
+                                            <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
+                                                    onClick=
+                                                    { 
+                                                        () => 
+                                                        { 
+                                                            if( account.category === -1 )
+                                                            {
+                                                                compRef.current[0].focus();
+                                                                
+                                                                return;
+                                                            }
 
-                                                        if( account.status === -1 )
-                                                        {
-                                                            compRef.current[1].focus();
-                                                            
-                                                            return;
-                                                        }
+                                                            if( account.status === -1 )
+                                                            {
+                                                                compRef.current[1].focus();
+                                                                
+                                                                return;
+                                                            }
 
-                                                        if( !account.amount )
-                                                        {
-                                                            compRef.current[2].focus();
-                                                            
-                                                            return;
-                                                        }
-                                                        
-                                                      
-                                                    } 
-                                                }
-                                        >
-                                            수정
-                                        </MDBBtn>
+                                                            if( !account.amount )
+                                                            {
+                                                                compRef.current[2].focus();
+                                                                
+                                                                return;
+                                                            }
+
+                                                            UpdateAccountQuery.mutate( 
+                                                            {
+                                                                accountId : account.accountId
+                                                                ,category : account.category
+                                                                ,status : account.status
+                                                                ,memo : account.memo
+                                                                ,amount : account.amount
+                                                            })
+                                                        } 
+                                                    }
+                                            >
+                                                수정
+                                            </MDBBtn>
+                                        </>
                                     )
                                 }
                                 // 등록
