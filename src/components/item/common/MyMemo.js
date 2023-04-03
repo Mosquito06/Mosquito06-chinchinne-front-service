@@ -36,6 +36,65 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
         }
     })
 
+    // Update Memo Query
+    const UpdateMemoQuery = MemoApi.useUpdateMemo(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_MEMO]);
+                
+                setMemo( prevState => (
+                {
+                    ...prevState
+                    ,id : res.data.memoId
+                    ,isNew : false
+                    ,isEdit : false
+                    ,isComplete : res.data.completeYn === COMMON_YN.YES ? true : false
+                    ,content : res.data.memo
+                    ,snapShop : res.data.memo
+                }))
+            }
+            ,settle : () => {}
+        }
+    })
+
+    // Update Complete Query
+    const UpdateCompleteQuery = MemoApi.useUpdateComplete(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_MEMO]);
+                
+                setMemo( prevState => (
+                {
+                    ...prevState
+                    ,id : res.data.memoId
+                    ,isNew : false
+                    ,isEdit : false
+                    ,isComplete : res.data.completeYn === COMMON_YN.YES ? true : false
+                }))
+            }
+            ,settle : () => {}
+        }
+    })
+
+    // Delete Memo Query
+    const DeleteMemoQuery = MemoApi.useDeleteMemo(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_MEMO]);
+            }
+            ,settle : () => {}
+        }
+    })
+
     return (
         <div className="form-check ms-2 d-flex align-items-center position-relative">
             <input  id={ 'memo_' + memo.id }
@@ -49,11 +108,11 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                         {
                             if( !memo.isEdit )
                             {
-                                setMemo( prevState => (
+                                UpdateCompleteQuery.mutate(
                                 {
-                                    ...prevState
-                                    ,isComplete : !memo.isComplete
-                                }))
+                                     memoId : memo.id
+                                    ,completeYn : COMMON_YN.YES
+                                })
                             }
                         }
                     }
@@ -83,34 +142,33 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                 />
                                 <div className='w-auto position-absolute end-0'>
                                     <button type="button" 
-                                            className="btn btn-primary"
+                                            className="btn btn-primary p-2 ps-3 pe-3"
                                             disabled={ AddMemoQuery.isLoading ? true : false }
                                             onClick=
                                             {
                                                 () =>
                                                 {
+                                                    if( !memo.content )
+                                                    {
+                                                        GLOBAL_MODAL.setModal( prevState => (
+                                                        {
+                                                                ...prevState
+                                                            ,isVisible : true
+                                                            ,text : 
+                                                            {
+                                                                ...prevState.text
+                                                                ,title : 'Alert'
+                                                                ,contents : '저장할 내용을 입력하세요.'
+                                                            }
+                                                            ,isConfirm : false
+                                                            ,callBack : ( res ) => { GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); }
+                                                        }))
+
+                                                        return;
+                                                    }
+                                                    
                                                     if( memo.isNew )
                                                     {
-                                                        if( !memo.content )
-                                                        {
-                                                            GLOBAL_MODAL.setModal( prevState => (
-                                                            {
-                                                                 ...prevState
-                                                                ,isVisible : true
-                                                                ,text : 
-                                                                {
-                                                                    ...prevState.text
-                                                                    ,title : 'Alert'
-                                                                    ,contents : '저장할 내용을 입력하세요.'
-                                                                }
-                                                                ,isConfirm : false
-                                                                ,callBack : ( res ) => { GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); }
-                                                            }))
-
-                                                            return;
-                                                        }
-                                                        
-                                                        
                                                         AddMemoQuery.mutate( 
                                                         {  
                                                             memo : memo.content
@@ -118,37 +176,62 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                                     }
                                                     else
                                                     {
-                                                        setMemo( prevState => (
+                                                        UpdateMemoQuery.mutate(
                                                         {
-                                                            ...prevState
-                                                            ,isEdit : false
-                                                            ,snapShop : memo.content
-                                                        }))
+                                                             memoId : memo.id
+                                                            ,memo : memo.content
+                                                        })
                                                     }
                                                 }
                                             }
                                     >
-                                        저장
-                                    </button>    
+                                        { memo.isNew ? '저장' : '수정' }
+                                    </button>
+                                    {
+                                        (()=>
+                                        {
+                                            if( !memo.isNew )
+                                            {
+                                                return (
+                                                    <button type="button" 
+                                                            className="btn btn-danger p-2 ps-3 pe-3 ms-1"
+                                                            onClick=
+                                                            {
+                                                                () =>
+                                                                {
+                                                                    DeleteMemoQuery.mutate( 
+                                                                    {
+                                                                        memoId : memo.id
+                                                                    })
+                                                                }
+                                                            }
+                                                    >
+                                                        삭제
+                                                    </button>
+                                                )
+                                            }
+
+                                        })()
+                                    }
                                     <button type="button" 
-                                            className="btn btn-secondary ms-1"
+                                            className="btn btn-secondary p-2 ps-3 pe-3 ms-1"
                                             onClick=
                                             {
                                                 () =>
                                                 {
-                                                    if( memo.isNew )
-                                                    {
-                                                        onCancelClicked( memo.id );
-                                                    }
-                                                    else
-                                                    {
+                                                    // if( memo.isNew )
+                                                    // {
+                                                    //     onCancelClicked( memo.id );
+                                                    // }
+                                                    // else
+                                                    // {
                                                         setMemo( prevState => (
                                                         {
                                                             ...prevState
                                                             ,isEdit : false
                                                             ,content : prevState.snapShop
                                                         }))
-                                                    }
+                                                    //}
                                                 }
                                             }
                                     >

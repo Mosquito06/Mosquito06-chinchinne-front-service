@@ -157,6 +157,8 @@ export const queryUtil =
     }
     ,useCommandQuery : ( { fn, props = { success : () => {}, error : () => {}, settle : () =>{} }, options = {} } ) =>
     {
+        const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
+        
         options.onSuccess = res => 
         {
             props.success( res );
@@ -164,7 +166,34 @@ export const queryUtil =
 
         options.onError = res =>
         {
-            props.error( res );
+            if( res.response.data.code === COMMON_ERROR_CODE.EXPIRE_TOKEN )
+            {
+                GLOBAL_MODAL.setModal( prevState => (
+                {
+                     ...prevState
+                    ,isVisible : true
+                    ,text : 
+                    {
+                        ...prevState.text
+                        ,title : 'Alert'
+                        ,contents : res.response.data.message
+                    }
+                    ,isConfirm : false
+                    ,callBack : ( res ) => 
+                    { 
+                        GLOBAL_MODAL.setModal( prevState => ({ ...prevState, isVisible : false })); 
+
+                        sessionStorage.setItem('ref-token', null);
+                        GLOBAL_TOKEN.setToken(null);
+
+                        window.location.href = '/'; 
+                    }
+                }))
+            }
+            else
+            {
+                props.error( res );
+            }
         }
 
         options.onSettled =  () =>
