@@ -7,19 +7,11 @@ export default () =>
     // context
     const { GLOBAL_MODAL } = useContext(GlobalContext);
 
-    // show State
-    const [show, setShow] = useState( false );
-
-    useEffect( () =>
-    {
-        setShow( GLOBAL_MODAL.modal.isVisible );
-
-    }, [ GLOBAL_MODAL.modal ])
-
     return (
-        <MDBModal   show={ show } 
-                    setShow={setShow}
+        <MDBModal   show={ GLOBAL_MODAL.modal.isVisible } 
+                    //setShow={ () => { setShow( GLOBAL_MODAL.modal.isVisible ) } }
                     closeOnEsc={ true }  
+                    staticBackdrop={ true }
                     tabIndex='-1'
         >
             <MDBModalDialog>
