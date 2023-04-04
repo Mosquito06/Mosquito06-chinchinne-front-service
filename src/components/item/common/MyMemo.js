@@ -219,19 +219,19 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                             {
                                                 () =>
                                                 {
-                                                    // if( memo.isNew )
-                                                    // {
-                                                    //     onCancelClicked( memo.id );
-                                                    // }
-                                                    // else
-                                                    // {
+                                                    if( memo.isNew )
+                                                    {
+                                                        onCancelClicked( memo.id );
+                                                    }
+                                                    else
+                                                    {
                                                         setMemo( prevState => (
                                                         {
                                                             ...prevState
                                                             ,isEdit : false
                                                             ,content : prevState.snapShop
                                                         }))
-                                                    //}
+                                                    }
                                                 }
                                             }
                                     >
