@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { COMMON_TEXT } from 'module/CommonCode';
 import MyCalendar from 'components/item/common/MyCalendar';
-import { MDBRow, MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle  } from 'mdb-react-ui-kit';
+import { MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle  } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-react-ui-kit';
 
 function Left()
 {
@@ -20,8 +21,8 @@ function Left()
     
     return (
         <>
-            <MDBRow style={{ height : '5%'}} >
-                <div style={{ display : 'inline-flex'}}>
+            <MDBCard className='w-100 h-100 m-0'> 
+                <MDBCardHeader style={{ display : 'inline-flex'}}>
                     <MDBDropdown>
                         <MDBDropdownToggle>{ calendar.year  + COMMON_TEXT.YEAR }</MDBDropdownToggle>
                         <MDBDropdownMenu>
@@ -65,12 +66,11 @@ function Left()
                             }
                         </MDBDropdownMenu>
                     </MDBDropdown>
-                </div>
-            </MDBRow>
-            
-            <MDBRow className='' style={{ height : '95%'}}>
-                <MyCalendar year={ calendar.year } month={ calendar.month } time={ calendar.time }/>
-            </MDBRow>
+                </MDBCardHeader>
+                <MDBCardBody className='d-flex justify-content-center'>
+                    <MyCalendar year={ calendar.year } month={ calendar.month } time={ calendar.time }/>
+                </MDBCardBody>
+            </MDBCard>
         </>
     )
 }

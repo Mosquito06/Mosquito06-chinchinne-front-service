@@ -96,7 +96,7 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
     })
 
     return (
-        <div className="form-check ms-2 d-flex align-items-center position-relative">
+        <div className="form-check d-flex align-items-center position-relative">
             <input  id={ 'memo_' + memo.id }
                     className="form-check-input" 
                     type="radio"  

@@ -3,6 +3,7 @@ import MemoApi from 'api/MemoApi';
 import MyMemo from 'components/item/common/MyMemo';
 import { GlobalContext } from 'context/GlobalContext';
 import { MDBRow, MDBCol } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from 'mdb-react-ui-kit';
 import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
 
 function MyDiary()
@@ -58,9 +59,11 @@ function MyDiary()
     }
 
     return (
-        <MDBRow className='position-relative' style={{height : 'fit-content'}}>
-            <div className="h2">
-                <span>MEMO</span>
+        <MDBCard className='h-100 m-0'>
+            <MDBCardHeader className='d-flex align-items-center p-2'>
+                <div className="h2 m-0">
+                    <span>MEMO</span>
+                </div>
                 <button type="button" 
                         className="btn btn-primary position-absolute end-0"
                         onClick=
@@ -73,31 +76,23 @@ function MyDiary()
                 >
                     <i className="fas fa-plus"></i>
                 </button>
-            </div>
-            
-            {
-                diary.map( memo =>
+            </MDBCardHeader>
+            <MDBCardBody className='p-0 ps-3 pt-3'>
                 {
-                    return (
-                        <MyMemo key={ memo.memoId }
-                                id={ memo.memoId }
-                                contents={ memo.memo }
-                                isComplete={ memo.completeYn === COMMON_YN.YES ? true : false }
-                                onCancelClicked={onCancelClicked}
-                        />
-                    )
-                })
-            }
-
-            {/* <div className="form-check ms-2">
-                <input className="form-check-input" type="radio" id="flexRadioDefault1"/>
-                <label className={"form-check-label text-decoration-line-through"} htmlFor="flexRadioDefault1" > Default radio </label> 
-            </div>    
-            <div className="form-check ms-2">
-                <input className="form-check-input" type="radio" id="flexRadioDefault2"/>
-                <label className="form-check-label" htmlFor="flexRadioDefault2"> Default checked radio </label>
-            </div> */}
-        </MDBRow>
+                    diary.map( memo =>
+                    {
+                        return (
+                            <MyMemo key={ memo.memoId }
+                                    id={ memo.memoId }
+                                    contents={ memo.memo }
+                                    isComplete={ memo.completeYn === COMMON_YN.YES ? true : false }
+                                    onCancelClicked={onCancelClicked}
+                            />
+                        )
+                    })
+                }
+            </MDBCardBody>
+        </MDBCard>
     )
 }
 

@@ -101,8 +101,8 @@ function MyCalendar( { year, month, time })
     }, [ time ])
 
     return (
-        <MDBContainer className={'h-100 square border-top'}>
-            <MDBRow className='text-center square border-start border-bottom border-end' >
+        <MDBContainer className={'w-100 h-100 m-0'}>
+            <MDBRow className='text-center square border' >
                 <MDBCol>Sun</MDBCol>
                 <MDBCol>Mon</MDBCol>
                 <MDBCol>Tue</MDBCol>
