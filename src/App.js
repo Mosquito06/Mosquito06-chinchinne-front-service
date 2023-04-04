@@ -14,6 +14,7 @@ import GlobalModal from 'components/common/GlobalModal';
 import MyAccountModal from 'components/modal/MyAccountModal';
 import Login from 'components/menu/Login';
 import Main from 'components/menu/Main';
+import Setting from 'components/menu/Setting';
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,7 @@ function App()
               <Routes>
                 <Route path="/" element={<PrivateRoute component={ Main } />}/>
                 <Route path="/login" element={<PublicRoute component={ Login } restricted={true}/>}/>
+                <Route path="/setting" element={<PrivateRoute component={ Setting } />}/>
               </Routes>
             </Router>
           

@@ -9,15 +9,12 @@ function MyCalendar( { year, month, time })
 {
     // Global State
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
-    
-    // Query State
-    const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_ACCOUNTS, { pathString : GLOBAL_TOKEN.token.uuid + '/' + time } ])
 
     // Search State
     const [search, setSearch] = useState(
     {
-         keys : queryKey
-        ,isFetch : true
+         keys : [ COMMON_QUERY_KEYS.SEARCH_ACCOUNTS, { pathString : GLOBAL_TOKEN.token.uuid + '/' + time } ]
+        ,isFetch : false
     })
     
     // Date State
@@ -95,13 +92,11 @@ function MyCalendar( { year, month, time })
 
     useEffect( () =>
     {   
-        setQueryKey( prevState => 
+        setSearch(
         {
-            let keys = [...prevState];
-            keys[1].pathString = GLOBAL_TOKEN.token.uuid + '/' + time;
-
-            return keys;
-        });
+             keys : [ COMMON_QUERY_KEYS.SEARCH_ACCOUNTS, { pathString : GLOBAL_TOKEN.token.uuid + '/' + time } ]
+            ,isFetch : true
+        })
 
     }, [ time ])
 
