@@ -78,7 +78,7 @@ export default ( ) =>
                         staticBackdrop={ true }
 
             >
-                <MDBModalDialog size="lg" >
+                <MDBModalDialog >
                     <MDBModalContent>
                         <MDBModalHeader>
                             <MDBModalTitle>{ DateFormatter(GLOBAL_MODAL.detail.time, 'YYYY년 MM월 DD일')} </MDBModalTitle>

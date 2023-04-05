@@ -196,7 +196,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                     staticBackdrop={ true }
 
         >
-            <MDBModalDialog size="lg" >
+            <MDBModalDialog>
                 <MDBModalContent>
                     <MDBModalHeader>
                         <MDBModalTitle>등록</MDBModalTitle>
