@@ -59,13 +59,13 @@ function MyDiary()
     }
 
     return (
-        <MDBCard className='h-100 m-0'>
+        <MDBCard className='h-100 m-0 p-0'>
             <MDBCardHeader className='d-flex align-items-center p-2'>
                 <div className="h2 m-0">
                     <span>MEMO</span>
                 </div>
                 <button type="button" 
-                        className="btn btn-primary position-absolute end-0"
+                        className="btn btn-primary position-absolute end-0 me-3"
                         onClick=
                         {
                             () =>
@@ -77,7 +77,7 @@ function MyDiary()
                     <i className="fas fa-plus"></i>
                 </button>
             </MDBCardHeader>
-            <MDBCardBody className='p-0 ps-3 pt-3'>
+            <MDBCardBody className='p-3 pe-2' style={ {overflowY : 'scroll'}}>
                 {
                     diary.map( memo =>
                     {

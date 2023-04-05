@@ -96,7 +96,7 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
     })
 
     return (
-        <div className="form-check d-flex align-items-center position-relative">
+        <div className="form-check d-flex align-items-center position-relative mt-1">
             <input  id={ 'memo_' + memo.id }
                     className="form-check-input" 
                     type="radio"  
@@ -128,6 +128,7 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                         type='text' 
                                         maxLength={25}
                                         value={ memo.content }
+                                        style={{fontSize : '0.8rem'}}
                                         onChange=
                                         {
                                             (e) =>
@@ -142,8 +143,9 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                 />
                                 <div className='w-auto position-absolute end-0'>
                                     <button type="button" 
-                                            className="btn btn-primary p-2 ps-3 pe-3"
+                                            className="btn btn-primary p-2"
                                             disabled={ AddMemoQuery.isLoading ? true : false }
+                                            style={{fontSize : '0.5rem'}}
                                             onClick=
                                             {
                                                 () =>
@@ -194,7 +196,8 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                             {
                                                 return (
                                                     <button type="button" 
-                                                            className="btn btn-danger p-2 ps-3 pe-3 ms-1"
+                                                            className="btn btn-danger p-2 ms-1"
+                                                            style={{fontSize : '0.5rem'}}
                                                             onClick=
                                                             {
                                                                 () =>
@@ -214,7 +217,8 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                         })()
                                     }
                                     <button type="button" 
-                                            className="btn btn-secondary p-2 ps-3 pe-3 ms-1"
+                                            className="btn btn-secondary p-2 ms-1"
+                                            style={{fontSize : '0.5rem'}}
                                             onClick=
                                             {
                                                 () =>
@@ -245,6 +249,7 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                     {
                         return (
                             <label  className={"form-check-label" + ( memo.isComplete ? ' text-decoration-line-through' : '' )} 
+                                    style={{fontSize : '0.9rem'}}
                                     onClick=
                                     {
                                         () =>

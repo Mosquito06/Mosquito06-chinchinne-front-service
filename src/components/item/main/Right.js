@@ -7,12 +7,8 @@ function Right()
 {
     return (
         <>
-            <MDBRow className='m-0' style={{ height : '60%', overflow : 'overlay'}}>
-                <MDBCard className='w-100 m-0 p-0'> 
-                    <MDBCardBody className='p-0 '>
-                        <MyDiary />
-                    </MDBCardBody>
-                </MDBCard>
+            <MDBRow className='m-0' style={{ height : '60%'}}>
+                <MyDiary />
             </MDBRow>
             {/* <MDBRow className='m-0' style={{ height : '20%'}}>
                 <MDBCard className='m-0'> 
@@ -22,7 +18,7 @@ function Right()
                 </MDBCard>
 
             </MDBRow> */}
-            <MDBRow className='m-0' style={{ height : '40%'}}>
+            <MDBRow className='m-0 pt-3' style={{ height : '40%'}}>
                 <MDBCard className='m-0'> 
                     <MDBCardBody className='p-0 ps-3 pt-3'>
                         통계 
