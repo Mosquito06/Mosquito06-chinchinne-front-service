@@ -216,7 +216,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                         /> 
                     </MDBModalHeader>
                     <MDBModalBody>
-                        <h6 className='bg-light p-2 border-top border-bottom'>Category</h6>
+                        <h6 className='bg-light p-2 border-top border-bottom fLn_Bd'>카테고리</h6>
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
                                 <Form.Select name='category' value={ account.category } onChange={ onAccountChanged } ref={ el => compRef.current[0] = el }>
@@ -224,13 +224,13 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                                     {
                                         categories.map( category =>
                                         {
-                                           return <option key={category.categoryId} value={category.categoryId}>{category.categoryName}</option> 
+                                           return <option key={category.id} value={category.id}>{category.name}</option> 
                                         })
                                     }
                                 </Form.Select>
                             </MDBListGroupItem>
                         </MDBListGroup>
-                        <h6 className='bg-light p-2 border-top border-bottom'>Type</h6>
+                        <h6 className='bg-light p-2 border-top border-bottom fLn_Bd'>타입</h6>
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem className='d-flex justify-content-between align-items-center'>
                                 <Form.Select name='status' value={ account.status } onChange={ onAccountChanged } ref={ el => compRef.current[1] = el }>
@@ -240,16 +240,16 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
                                 </Form.Select>
                             </MDBListGroupItem>
                         </MDBListGroup>
-                        <h6 className='bg-light p-2 border-top border-bottom'>Amount</h6>
+                        <h6 className='bg-light p-2 border-top border-bottom fLn_Bd'>금액</h6>
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem className=''>
-                                <MDBInput label='Amount' id='typeNumber' type='text' name='amount' value={ account.amount } onChange={ onAccountChanged } ref={ el => compRef.current[2] = el }/>
+                                <MDBInput label='금액' id='typeNumber' type='text' name='amount' value={ account.amount } onChange={ onAccountChanged } ref={ el => compRef.current[2] = el }/>
                             </MDBListGroupItem>
                         </MDBListGroup>
-                        <h6 className='bg-light p-2 border-top border-bottom'>Memo</h6>
+                        <h6 className='bg-light p-2 border-top border-bottom fLn_Bd'>메모</h6>
                         <MDBListGroup light className='mb-4'>
                             <MDBListGroupItem className=''>
-                                <MDBTextArea label='Message' id='textAreaExample' rows={4} style={{resize : 'none'}} name='memo' value={ account.memo } onChange={ onAccountChanged } ref={ el => compRef.current[3] = el }/>
+                                <MDBTextArea label='메모' id='textAreaExample' rows={4} style={{resize : 'none'}} name='memo' value={ account.memo } onChange={ onAccountChanged } ref={ el => compRef.current[3] = el }/>
                             </MDBListGroupItem>
                         </MDBListGroup>
                     </MDBModalBody>

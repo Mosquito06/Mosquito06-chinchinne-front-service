@@ -77,7 +77,7 @@ function Header()
                                     }
                         />
                         <MDBIcon    className='me-3' 
-                                    icon='cogs' 
+                                    icon='gear' 
                                     size='lg' 
                                     style={{ opacity : '70%', cursor : 'pointer' }} 
                                     onMouseOver={ ( { target } ) => target.style.opacity = '100%' }
@@ -91,7 +91,7 @@ function Header()
                                     }
                         />
                         <MDBIcon    className='' 
-                                    icon='walking' 
+                                    icon='door-open' 
                                     size='lg' 
                                     style={{ opacity : '70%', cursor : 'pointer' }} 
                                     onMouseOver={ ( { target } ) => target.style.opacity = '100%' }

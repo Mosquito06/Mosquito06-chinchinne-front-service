@@ -1,28 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import Header from 'components/common/Header';
+import MyGeneral from 'components/item/setting/MyGeneral';
+import MyCategories from 'components/item/setting/MyCategories';
 
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
 import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from 'mdb-react-ui-kit';
-import {
-    MDBIcon,
-    MDBTabs,
-    MDBTabsItem,
-    MDBTabsLink,
-    MDBTabsContent,
-    MDBTabsPane
-  } from 'mdb-react-ui-kit';
+import { MDBIcon, MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 
 function Setting()
 {
-    const [iconsActive, setIconsActive] = useState('tab1');
-
-    const handleIconsClick = (value) => {
-      if (value === iconsActive) {
-        return;
-      }
-  
-      setIconsActive(value);
-    };
+    // Activie Const
+    const ACTIVE = 
+    {
+         GENARAL : 1
+        ,CATEGORIES : 2
+    }
+    
+    // Tab State
+    const [tab, setTab] = useState(ACTIVE.GENARAL);
     
     return (
         <MDBContainer className='vh-100' fluid>
@@ -34,35 +29,30 @@ function Setting()
                     <MDBCard className='w-100'> 
                         {/* alignment='center' */}
                         <MDBCardHeader>
-                            <MDBTabs className='mb-3'>
+                            <MDBTabs className=''>
                                 <MDBTabsItem>
-                                <MDBTabsLink onClick={() => handleIconsClick('tab1')} active={iconsActive === 'tab1'}>
-                                    <MDBIcon fas icon='chart-pie' className='me-2' /> Sales
-                                </MDBTabsLink>
+                                    <MDBTabsLink onClick={() => setTab(ACTIVE.GENARAL)} active={tab === ACTIVE.GENARAL}>
+                                        <MDBIcon fas icon='cogs' className='me-2' /> General
+                                    </MDBTabsLink>
                                 </MDBTabsItem>
                                 <MDBTabsItem>
-                                <MDBTabsLink onClick={() => handleIconsClick('tab2')} active={iconsActive === 'tab2'}>
-                                    <MDBIcon fas icon='chart-line' className='me-2' /> Subscriptions
-                                </MDBTabsLink>
-                                </MDBTabsItem>
-                                <MDBTabsItem>
-                                <MDBTabsLink onClick={() => handleIconsClick('tab3')} active={iconsActive === 'tab3'}>
-                                    <MDBIcon fas icon='cogs' className='me-2' /> Settings
-                                </MDBTabsLink>
+                                    <MDBTabsLink onClick={() => setTab(ACTIVE.CATEGORIES)} active={tab === ACTIVE.CATEGORIES}>
+                                        <MDBIcon fas icon='folder-tree' className='me-2' /> Categories
+                                    </MDBTabsLink>
                                 </MDBTabsItem>
                             </MDBTabs>
                         </MDBCardHeader>
                         <MDBCardBody>
-                            <MDBTabsContent>
-                                <MDBTabsPane show={iconsActive === 'tab1'}>Tab 1 content</MDBTabsPane>
-                                <MDBTabsPane show={iconsActive === 'tab2'}>Tab 2 content</MDBTabsPane>
-                                <MDBTabsPane show={iconsActive === 'tab3'}>Tab 3 content</MDBTabsPane>
+                            <MDBTabsContent className='h-100'>
+                                <MDBTabsPane show={tab === ACTIVE.GENARAL} className='h-100'>
+                                    <MyGeneral />
+                                </MDBTabsPane>
+                                <MDBTabsPane show={tab === ACTIVE.CATEGORIES} className='h-100'>
+                                    <MyCategories />
+                                </MDBTabsPane>
                             </MDBTabsContent>
-                            {/* <MDBCardTitle>Special title treatment</MDBCardTitle>
-                            <MDBCardText>With supporting text below as a natural lead-in to additional content.</MDBCardText>
-                            <MDBBtn href='#'>Go somewhere</MDBBtn> */}
                         </MDBCardBody>
-                        <MDBCardFooter>2 days ago</MDBCardFooter>
+                        {/* <MDBCardFooter>2 days ago</MDBCardFooter> */}
                     </MDBCard>
                 </MDBCol>
             </MDBRow>
