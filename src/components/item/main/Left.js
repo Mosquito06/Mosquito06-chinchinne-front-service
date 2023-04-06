@@ -3,6 +3,7 @@ import { CommaFormatter } from 'module/Common';
 import { COMMON_TEXT } from 'module/CommonCode';
 import { GlobalContext } from 'context/GlobalContext';
 import MyCalendar from 'components/item/common/MyCalendar';
+import MyAccountModal from 'components/modal/MyAccountModal';
 
 import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-react-ui-kit';
 import { MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBInputGroup } from 'mdb-react-ui-kit';
@@ -85,6 +86,7 @@ function Left()
                     <MyCalendar year={ calendar.year } month={ calendar.month } time={ calendar.time }/>
                 </MDBCardBody>
             </MDBCard>
+            <MyAccountModal />
         </>
     )
 }

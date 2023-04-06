@@ -9,9 +9,8 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import GlobalContextProvider from 'context/GlobalContext';
 import PrivateRoute from 'components/common/PrivateRoute';
 import PublicRoute from 'components/common/PublicRoute';
-
 import GlobalModal from 'components/common/GlobalModal';
-import MyAccountModal from 'components/modal/MyAccountModal';
+
 import Login from 'components/menu/Login';
 import Main from 'components/menu/Main';
 import Setting from 'components/menu/Setting';
@@ -32,9 +31,7 @@ function App()
                 <Route path="/setting" element={<PrivateRoute component={ Setting } />}/>
               </Routes>
             </Router>
-          
-          
-            <MyAccountModal />
+            
             <GlobalModal />
           </GlobalContextProvider>
       </QueryClientProvider>

@@ -101,7 +101,7 @@ function MyCalendar( { year, month, time })
     }, [ time ])
 
     return (
-        <MDBContainer className={'w-100 h-100 m-0'}>
+        <MDBContainer className={'w-100 h-100 m-0 p-0'}>
             <MDBRow className='text-center square border' >
                 <MDBCol>Sun</MDBCol>
                 <MDBCol>Mon</MDBCol>

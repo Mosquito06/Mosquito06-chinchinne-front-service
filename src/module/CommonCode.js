@@ -5,6 +5,7 @@ export const COMMON_QUERY_KEYS =
     ,SEARCH_ACCOUNT : 'search_account'
     ,SEARCH_ACCOUNT_DETAIL : 'search_account_detail'
     ,SEARCH_CATEGORIES : 'search_categories'
+    ,SEARCH_CATEGORY : 'search_category'
     ,SEARCH_MEMO : 'search_memo'
 }
 

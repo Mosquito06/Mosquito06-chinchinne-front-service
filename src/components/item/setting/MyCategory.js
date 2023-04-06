@@ -5,42 +5,63 @@ import { DateFormatter } from 'module/Common';
 import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
 import { MDBCheckbox, MDBBtn, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
 
-function MyCategory({ checked, id, name, color, regDate, modDate })
+function MyCategory({ checked, id, name, color, regDate, modDate, onCheckChanged, onCategoryClicked })
 {
     // Global State
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
 
+    // Checked State
     const [isChecked, setChecked] = useState(checked);
 
     useEffect( () =>
     {
-        
         setChecked(checked);
-    
+
     }, [checked])
 
     return (
         <tr>
-            <td scope='row'><MDBCheckbox checked={isChecked} onChange={ (e) => { setChecked( e.target.checked ) }} /></td>
-            <td>{id}</td>
-            <td>{name}</td>
-            <td>
+            <td scope='row'>
+                <MDBCheckbox    checked={isChecked} 
+                                onChange=
+                                { 
+                                    (e) => 
+                                    { 
+                                        setChecked( e.target.checked ) 
+                                        onCheckChanged( e.target.checked, id );
+                                    }
+                                }
+                />
+            </td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
+                {id}
+            </td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
+                {name}
+            </td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
                 <div className='d-flex justify-content-center align-items-center'>
-                    <div className='w-50'>
-                        <MDBInput className='' type='color' value={ color ? '#' + color : '' }/>
+                    <div>
+                        <span   className='d-block square rounded-circle' 
+                                style={ { height : '25px', width : '25px', backgroundColor : color ? color : '000000'  } }
+                        />
                     </div>
                 </div>
             </td>
-            <td>{ DateFormatter(regDate, 'YYYY년 MM월 DD일 HH:mm') }</td>
-            <td>{ modDate ? DateFormatter(modDate, 'YYYY년 MM월 DD일 HH:mm') : '' }</td>
-            <td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
+                { DateFormatter(regDate, 'YYYY년 MM월 DD일 HH:mm') }
+            </td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
+                { modDate ? DateFormatter(modDate, 'YYYY년 MM월 DD일 HH:mm') : '' }
+            </td>
+            {/* <td>
                 <MDBBtn tag='a' color='none' className='m-1'>
                     <MDBIcon icon='edit' size='lg' />
                 </MDBBtn>
                 <MDBBtn tag='a' color='none' className='m-1'>
                     <MDBIcon icon='trash-alt' size='lg' />
                 </MDBBtn>
-            </td>
+            </td> */}
         </tr>
     )
 }
