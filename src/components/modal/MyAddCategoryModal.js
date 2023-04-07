@@ -79,6 +79,21 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
             ,settle : () => {}
         }
     })
+
+     // Delete Category Query
+     const DeleteCategoryQuery = CategoryApi.useDeleteCategory(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
+
+                setVisible(false);
+            }
+            ,settle : () => {}
+        }
+    })
     
     // Account Changed Events
     const onCategoryChanged = (e) => 
@@ -185,7 +200,10 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                                     { 
                                                         () => 
                                                         { 
-                                                            
+                                                            DeleteCategoryQuery.mutate( 
+                                                            {
+                                                                id : category.id
+                                                            })
                                                         } 
                                                     }
                                             >
