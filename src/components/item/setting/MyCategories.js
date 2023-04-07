@@ -13,6 +13,15 @@ function MyCategories()
     // Global State
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
 
+    // Search State
+    const [search, setSearch] = useState(
+    {
+         keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid } ]
+        ,enabled : true 
+        ,keywords : '' 
+        ,compRef : useRef([])
+    })
+    
     // Categories State
     const [categories, setCategoreis] = useState([]);
 
@@ -34,13 +43,20 @@ function MyCategories()
     {
         queryOptions : 
         {
-             keys: [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid } ]
+             keys: search.keys
             ,success : ( res ) =>
             {
                 setCategoreis(res.data);
             }
-            ,settle : () => {}
-            ,isEnabled : true
+            ,settle : () => 
+            {
+                setSearch( prevState => (
+                {
+                     ...prevState
+                    ,enabled : false
+                }))
+            }
+            ,isEnabled : search.enabled
         }
     })
 
@@ -84,15 +100,40 @@ function MyCategories()
         <>
             <MDBCard className='h-100'>
                 <MDBCardHeader className='d-flex justify-content-end  align-items-center p-4'>
-                    {/* <MDBInput label='Amount' id='typeNumber' type='text' name='amount' value={ account.amount } onChange={ onAccountChanged } ref={ el => compRef.current[2] = el }/> */}
-                    <MDBInput label='검색' id='typeNumber' type='text' name='amount'/>
+                    <MDBInput   label='검색' 
+                                type='text' 
+                                value={ search.keywords } 
+                                ref={ el => search.compRef.current[0] = el }
+                                onChange=
+                                {
+                                    (e) =>
+                                    {
+                                        setSearch( prevState => (
+                                        {
+                                             ...prevState
+                                            ,keywords : e.target.value
+                                        }))  
+                                    }
+                                }
+                    />
                     <MDBBtn className='ms-1'
                             color='secondary'
                             onClick=
                             {
                                 () =>
                                 {
-
+                                    // if( !search.keywords )
+                                    // {
+                                    //     search.compRef.current[0].focus();
+                                    //     return;
+                                    // }
+                                    
+                                    setSearch( prevState => (
+                                    {
+                                         ...prevState
+                                        ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords } ]
+                                        ,enabled : true
+                                    }))
                                 }
                             }
                     >
