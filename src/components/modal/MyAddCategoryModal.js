@@ -26,10 +26,10 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
     {
          id : 0
         ,name : ''
-        ,color : ''
+        ,color : '#000000'
     });
 
-    // Search Query
+    // Search Category Query
     const SearchCategoryQuery = CategoryApi.useSearchCategoryDetail(
     {
         queryOptions : 
@@ -50,19 +50,16 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
         }
     })
 
-    // Add Account Query
-    const AddAccountQuery = AccountApi.useAddAccount(
+    // Add Category Query
+    const AddCategoryQuery = CategoryApi.useAddCategory(
         {
             queryOptions :
             {
                 success : ( res ) =>
                 {
-                    queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
-                    queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
+                    queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
     
                     setVisible(false);
-                                                
-                    
                 }
                 ,settle : () => {}
             }
@@ -168,7 +165,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                     return (
                                         <>
                                             <MDBBtn color='danger'
-                                                    disabled={ AddAccountQuery.isLoading ? true : false }
+                                                    disabled={ AddCategoryQuery.isLoading ? true : false }
                                                     onClick=
                                                     { 
                                                         () => 
@@ -179,7 +176,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                             >
                                                 삭제
                                             </MDBBtn>
-                                            <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
+                                            <MDBBtn disabled={ AddCategoryQuery.isLoading ? true : false }
                                                     onClick=
                                                     { 
                                                         () => 
@@ -197,12 +194,23 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                 else
                                 {
                                     return (
-                                        <MDBBtn disabled={ AddAccountQuery.isLoading ? true : false }
+                                        <MDBBtn disabled={ AddCategoryQuery.isLoading ? true : false }
                                                 onClick=
                                                 { 
                                                     () => 
                                                     { 
-                                                       
+                                                        if( !category.name )
+                                                        {
+                                                            compRef.current[0].focus();
+                                                            
+                                                            return;
+                                                        }
+
+                                                        AddCategoryQuery.mutate( 
+                                                        {
+                                                             name : category.name
+                                                            ,color : category.color
+                                                        })
                                                     }
                                                 }
                                         >
