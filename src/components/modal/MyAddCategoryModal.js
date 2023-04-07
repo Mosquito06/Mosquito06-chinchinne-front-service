@@ -52,18 +52,33 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
 
     // Add Category Query
     const AddCategoryQuery = CategoryApi.useAddCategory(
+    {
+        queryOptions :
         {
-            queryOptions :
+            success : ( res ) =>
             {
-                success : ( res ) =>
-                {
-                    queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
-    
-                    setVisible(false);
-                }
-                ,settle : () => {}
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
+
+                setVisible(false);
             }
-        })
+            ,settle : () => {}
+        }
+    })
+
+    // Update Category Query
+    const UpdateCategoryQuery = CategoryApi.useUpdateCategory(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
+
+                setVisible(false);
+            }
+            ,settle : () => {}
+        }
+    })
     
     // Account Changed Events
     const onCategoryChanged = (e) => 
@@ -181,7 +196,19 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                                     { 
                                                         () => 
                                                         { 
-                                                            
+                                                            if( !category.name )
+                                                            {
+                                                                compRef.current[0].focus();
+                                                                
+                                                                return;
+                                                            }
+    
+                                                            UpdateCategoryQuery.mutate( 
+                                                            {
+                                                                 id : category.id
+                                                                ,name : category.name
+                                                                ,color : category.color
+                                                            })
                                                         } 
                                                     }
                                             >
