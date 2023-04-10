@@ -99,7 +99,7 @@ function MyCategories()
     return (
         <>
             <MDBCard className='h-100'>
-                <MDBCardHeader className='d-flex justify-content-end  align-items-center p-4'>
+                <MDBCardHeader className='d-flex justify-content-end align-items-center p-4'>
                     <MDBInput   label='검색' 
                                 type='text' 
                                 value={ search.keywords } 
