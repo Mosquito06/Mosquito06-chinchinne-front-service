@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
 import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBIcon } from 'mdb-react-ui-kit';
-import { COMMON_YN, COMMON_COLOR_CLASS } from 'module/CommonCode';
+import { COMMON_COLOR_CLASS } from 'module/CommonCode';
 
 function MyNavbar({ })
 {

@@ -1,4 +1,4 @@
-import { useEffect, useState, useContext } from 'react';
+import { useState, useContext } from 'react';
 import MemoApi from 'api/MemoApi';
 import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';

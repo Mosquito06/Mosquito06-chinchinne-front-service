@@ -1,17 +1,17 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import CategoryApi from 'api/CategoryApi';
 import { GlobalContext } from 'context/GlobalContext';
 import MyCategory from 'components/item/setting/MyCategory';
 import MyAddCategoryModal from 'components/modal/MyAddCategoryModal';
-import { MDBInput, MDBBtn, MDBIcon } from 'mdb-react-ui-kit';
+import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import { MDBTable, MDBTableHead, MDBTableBody, MDBCheckbox } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter } from 'mdb-react-ui-kit';
-import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
+import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardFooter } from 'mdb-react-ui-kit';
+import { COMMON_QUERY_KEYS } from 'module/CommonCode';
 
 function MyCategories()
 {
     // Global State
-    const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
+    const { GLOBAL_TOKEN } = useContext(GlobalContext);
 
     // Search State
     const [search, setSearch] = useState(

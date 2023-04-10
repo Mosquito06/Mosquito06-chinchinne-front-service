@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext } from 'react';
 import LoginApi from 'api/LoginApi';
 import { useNavigate } from 'react-router-dom'; 
 import { GlobalContext } from 'context/GlobalContext';
-import { MDBInput, MDBCol, MDBRow, MDBCheckbox, MDBSpinner, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBInput, MDBSpinner, MDBBtn } from 'mdb-react-ui-kit';
 
 function Login()
 {

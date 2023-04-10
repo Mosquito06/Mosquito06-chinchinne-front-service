@@ -4,7 +4,6 @@ import Left from 'components/item/main/Left';
 import Right from 'components/item/main/Right';
 
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 
 function Main()
 {

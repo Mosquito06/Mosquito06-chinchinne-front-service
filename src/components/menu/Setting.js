@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Header from 'components/common/Header';
 import MyGeneral from 'components/item/setting/MyGeneral';
 import MyCategories from 'components/item/setting/MyCategories';
 
 import { MDBContainer, MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-react-ui-kit';
 import { MDBIcon, MDBTabs, MDBTabsItem, MDBTabsLink, MDBTabsContent, MDBTabsPane } from 'mdb-react-ui-kit';
 
 function Setting()

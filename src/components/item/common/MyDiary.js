@@ -1,15 +1,14 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import MemoApi from 'api/MemoApi';
 import MyMemo from 'components/item/common/MyMemo';
 import { GlobalContext } from 'context/GlobalContext';
-import { MDBRow, MDBCol } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-react-ui-kit';
 import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
 
 function MyDiary()
 {
     // Global State
-    const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
+    const { GLOBAL_TOKEN } = useContext(GlobalContext);
     
     // Query State
     const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_MEMO, { pathString : GLOBAL_TOKEN.token.uuid } ])

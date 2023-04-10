@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import MyDiary from 'components/item/common/MyDiary';
 import { MDBRow } from 'mdb-react-ui-kit';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
 
 function Right()
 {

@@ -15,7 +15,7 @@ function MyGeneral()
                 
             </MDBCardHeader> */}
             <MDBCardBody className='p-3 pe-2'>
-              
+                
             </MDBCardBody>
         </MDBCard>
     )

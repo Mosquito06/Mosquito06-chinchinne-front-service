@@ -1,15 +1,9 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import CategoryApi from 'api/CategoryApi';
-import { GlobalContext } from 'context/GlobalContext';
 import { DateFormatter } from 'module/Common';
-import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
-import { MDBCheckbox, MDBBtn, MDBIcon, MDBInput } from 'mdb-react-ui-kit';
+import { MDBCheckbox } from 'mdb-react-ui-kit';
 
 function MyCategory({ checked, id, name, color, regDate, modDate, onCheckChanged, onCategoryClicked })
 {
-    // Global State
-    const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
-
     // Checked State
     const [isChecked, setChecked] = useState(checked);
 
