@@ -38,7 +38,21 @@ function MyBudget( { value })
                         if( budget.isEdit )
                         {
                             return (
-                                <MDBInput label='금액' type='text' /> 
+                                <MDBInput   label='금액' 
+                                            type='text' 
+                                            value={ budget.value } 
+                                            onChange=
+                                            {
+                                                (e) =>
+                                                {
+                                                    setBudget( prevState => (
+                                                    {
+                                                         ...prevState
+                                                        ,value : Number(e.target.value.replace(/[^0-9]/g, ''))
+                                                    }))
+                                                }
+                                            } 
+                                /> 
                             )
                         }
                         else
