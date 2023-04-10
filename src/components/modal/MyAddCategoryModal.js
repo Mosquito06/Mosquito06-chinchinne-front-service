@@ -113,7 +113,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
             {
                  id : 0
                 ,name : ''
-                ,color : ''
+                ,color : '#000000'
             });
 
             setTarget( 0 );
