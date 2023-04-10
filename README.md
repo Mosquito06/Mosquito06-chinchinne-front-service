@@ -21,7 +21,8 @@
 <img src="https://user-images.githubusercontent.com/32257949/230909482-1a0120fb-681a-4a5e-8f37-8b90c948347f.png"  width="750" height="370">
 <img src="https://user-images.githubusercontent.com/32257949/230909492-b243b70e-a684-4b1e-ae2f-e3771647175a.png"  width="750" height="370">
 <img src="https://user-images.githubusercontent.com/32257949/230909498-d92b82c5-3f01-4541-a64e-0edf2757b264.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230909508-c650191a-3962-460a-a201-a715a500ae9c.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/230911209-c5486a77-1ecb-4a0f-aa87-9ad359299846.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/230911217-59879a09-730c-4f02-9fbb-7bc4bdd11f38.png"  width="750" height="370">
 
 3. 기술 스택 및 설명
 <div align="left">
