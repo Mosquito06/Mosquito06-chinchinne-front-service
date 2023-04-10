@@ -1,8 +1,9 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
-import { CommaFormatter } from 'module/Common';
+import GeneralApi from 'api/GeneralApi';
 import { GlobalContext } from 'context/GlobalContext';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { MDBTable, MDBTableHead, MDBTableBody, MDBCheckbox } from 'mdb-react-ui-kit';
+import MyBudget from 'components/item/setting/MyBudget';
+import { MDBCard, MDBCardBody } from 'mdb-react-ui-kit';
+import { MDBTable, MDBTableBody } from 'mdb-react-ui-kit';
 import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
 
 function MyGeneral()
@@ -10,60 +11,38 @@ function MyGeneral()
     // Global State
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
 
+    // General State
     const [general, setGeneral] = useState(
     {
-        budget : 
+        budget : 0
+    })
+
+    // Search Query
+    const SearchGeneralQuery = GeneralApi.useSearchGeneral(
+    {
+        queryOptions : 
         {
-             isEdit : false
-            ,value : 0
+             keys: [ COMMON_QUERY_KEYS.SEARCH_GENERAL, { pathString : GLOBAL_TOKEN.token.uuid } ]
+            ,success : ( res ) =>
+            {
+                setGeneral( prevState => (
+                {
+                     ...prevState
+                    ,budget : res.data.budget
+                }));
+            }
+            ,settle : () => {}
+            ,isEnabled : true
         }
     })
 
     return (
         <div className='h-100 w-100 d-flex justify-content-center align-items-center'>
             <MDBCard className='h-100 w-50 m-0 p-0'>
-                <MDBCardHeader className='d-flex justify-content-end align-items-center p-4'>
-                    <MDBBtn className='ms-1 me-1' 
-                                // onClick=
-                                // {
-                                //     () =>
-                                //     {
-                                //         setVisible( true );
-                                //     }
-                                // }
-                        >
-                            저장
-                        </MDBBtn>    
-                </MDBCardHeader>
                 <MDBCardBody className='p-3 pe-2'>
                     <MDBTable className='text-center'>
                         <MDBTableBody className=''>
-                            <tr>
-                                <th scope='row' className='border-end' style={ {width : '20%'} }>
-                                    예산
-                                </th>
-                                <td className=''>
-                                    {
-                                        (() => 
-                                        {
-                                            if( general.budget.isEdit )
-                                            {
-                                                return (
-                                                    <MDBInput label='금액' type='text' /> 
-                                                )
-                                            }
-                                            else
-                                            {
-                                                return (
-
-                                                    
-                                                    CommaFormatter(300000)
-                                                )
-                                            }
-                                        })()
-                                    }
-                                </td>
-                            </tr>
+                            <MyBudget value={ general.budget }/>
                         </MDBTableBody>
                     </MDBTable>
                 </MDBCardBody>
