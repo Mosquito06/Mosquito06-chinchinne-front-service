@@ -1,18 +1,43 @@
-import React, { useRef, useState, useContext, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
+import GeneralApi from 'api/GeneralApi';
 import { CommaFormatter } from 'module/Common';
-import { GlobalContext } from 'context/GlobalContext';
-import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardFooter, MDBBtn, MDBInput } from 'mdb-react-ui-kit';
-import { MDBTable, MDBTableHead, MDBTableBody, MDBCheckbox } from 'mdb-react-ui-kit';
-import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
+import { useQueryClient   } from 'react-query';
+import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
+import { COMMON_QUERY_KEYS } from 'module/CommonCode';
 
 function MyBudget( { value })
 {
+    // Query Client
+    const queryClient = useQueryClient();
+    
+    // Component Ref
+    const compRef = useRef([]);
+    
     // Budget State
     const [budget, setBudget] = useState(
     {
          isEdit : false
         ,snapshot : value
         ,value : value
+    })
+
+    // Update General Query
+    const UpdateGeneralQuery = GeneralApi.useUpdateGeneral(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                queryClient.refetchQueries([ COMMON_QUERY_KEYS.SEARCH_GENERAL ]);
+
+                setBudget( prevState => (
+                {
+                    ...prevState
+                    ,isEdit : false
+                }))
+            }
+            ,settle : () => {}
+        }
     })
 
     useEffect( () =>
@@ -40,7 +65,8 @@ function MyBudget( { value })
                             return (
                                 <MDBInput   label='금액' 
                                             type='text' 
-                                            value={ budget.value } 
+                                            ref={ el => compRef.current[0] = el }
+                                            value={ budget.value }
                                             onChange=
                                             {
                                                 (e) =>
@@ -78,11 +104,17 @@ function MyBudget( { value })
                                                 {
                                                     () =>
                                                     {
-                                                        setBudget( prevState => (
+                                                        if( !budget.value )
                                                         {
-                                                            ...prevState
-                                                            ,isEdit : false
-                                                        }))
+                                                            compRef.current[0].focus();
+
+                                                            return;
+                                                        }
+                                                        
+                                                        UpdateGeneralQuery.mutate(
+                                                        {
+                                                            budget : budget.value
+                                                        })
                                                     }
                                                 }
                                         >
