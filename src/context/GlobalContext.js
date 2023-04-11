@@ -10,7 +10,8 @@ export default ( { children } ) =>
     // 금액 State
     const [money, setMoney] = useState(
     {
-         balance : 0
+         budget : 0
+        ,balance : 0
         ,expense : 0
     })
 

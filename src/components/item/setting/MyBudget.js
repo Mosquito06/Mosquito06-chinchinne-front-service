@@ -1,12 +1,16 @@
-import React, { useRef, useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect, useContext } from 'react';
 import GeneralApi from 'api/GeneralApi';
 import { CommaFormatter } from 'module/Common';
 import { useQueryClient   } from 'react-query';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
+import { GlobalContext } from 'context/GlobalContext';
 import { COMMON_QUERY_KEYS } from 'module/CommonCode';
 
 function MyBudget( { value })
 {
+    // Global State
+    const { GLOBAL_MONEY } = useContext(GlobalContext);
+    
     // Query Client
     const queryClient = useQueryClient();
     
@@ -42,6 +46,13 @@ function MyBudget( { value })
 
     useEffect( () =>
     {
+        GLOBAL_MONEY.setMoney( prevState => (
+        {
+             ...prevState
+            ,budget : value
+            ,balance : value - prevState.expense
+        }))
+        
         setBudget( prevState => (
         {
              ...prevState

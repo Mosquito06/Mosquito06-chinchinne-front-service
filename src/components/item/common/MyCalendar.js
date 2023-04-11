@@ -1,4 +1,5 @@
 import React, { useRef, useState, useContext, useEffect } from 'react';
+import GeneralApi from 'api/GeneralApi';
 import AccountApi from 'api/AccountApi';
 import MyDate from 'components/item/common/MyDate';
 import { GlobalContext } from 'context/GlobalContext';
@@ -23,8 +24,28 @@ function MyCalendar( { year, month, time })
          list : []
         ,data : []
     });
+
+    // Search General Query
+    const SearchGeneralQuery = GeneralApi.useSearchGeneral(
+    {
+        queryOptions : 
+        {
+             keys: [ COMMON_QUERY_KEYS.SEARCH_GENERAL, { pathString : GLOBAL_TOKEN.token.uuid } ]
+            ,success : ( res ) =>
+            {
+                GLOBAL_MONEY.setMoney( prevState => (
+                {
+                     ...prevState
+                    ,budget : res.data.budget 
+                    ,balance : res.data.budget - prevState.expense
+                }))
+            }
+            ,settle : () => {}
+            ,isEnabled : true
+        }
+    })
     
-    // Search Query
+    // Search Account Query
     const SearchAccountQuery = AccountApi.useSearchAccounts(
     {
         queryOptions : 
@@ -40,6 +61,7 @@ function MyCalendar( { year, month, time })
                 GLOBAL_MONEY.setMoney( prevState => (
                 {
                      ...prevState
+                    ,balance : prevState.budget - TOTAL 
                     ,expense : TOTAL
                 }))
                 

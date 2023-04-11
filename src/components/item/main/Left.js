@@ -77,7 +77,7 @@ function Left()
                     </div>
                     <MDBInputGroup className='w-50 me-4 position-absolute end-0'>
                         <span className='input-group-text'>잔액</span>
-                        <input className='form-control' placeholder='' type='number' disabled/>
+                        <input className='form-control text-end' placeholder='' type='text' value={ CommaFormatter(GLOBAL_MONEY.money.balance) } disabled/>
                         <span className='input-group-text'>지출</span>
                         <input className='form-control text-end' type='text' value={ CommaFormatter(GLOBAL_MONEY.money.expense) } disabled/>
                     </MDBInputGroup>
