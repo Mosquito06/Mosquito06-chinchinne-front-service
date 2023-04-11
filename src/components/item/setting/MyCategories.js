@@ -6,6 +6,7 @@ import MyAddCategoryModal from 'components/modal/MyAddCategoryModal';
 import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import { MDBTable, MDBTableHead, MDBTableBody, MDBCheckbox } from 'mdb-react-ui-kit';
 import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardFooter } from 'mdb-react-ui-kit';
+import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
 import { COMMON_QUERY_KEYS } from 'module/CommonCode';
 
 function MyCategories()
@@ -16,14 +17,21 @@ function MyCategories()
     // Search State
     const [search, setSearch] = useState(
     {
-         keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid } ]
+         keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'page=' + 1 } ]
         ,enabled : true 
         ,keywords : '' 
         ,compRef : useRef([])
     })
     
     // Categories State
-    const [categories, setCategoreis] = useState([]);
+    const [categories, setCategories] = useState(
+    {
+         list : []
+        ,total : 0
+        ,totalPage : 0
+        ,page : 1
+        ,perPage : 10
+    });
 
     // Checked State
     const [checked, setChecked] = useState(
@@ -46,7 +54,17 @@ function MyCategories()
              keys: search.keys
             ,success : ( res ) =>
             {
-                setCategoreis(res.data);
+                console.log( res) ;
+                
+                setCategories( prevState => (
+                {
+                     ...prevState
+                    ,list : res.data.categories
+                    ,total : res.data.total
+                    ,totalPage : res.data.totalPage
+                    ,page : res.data.page
+                    ,perPage : res.data.perPage
+                }));
             }
             ,settle : () => 
             {
@@ -94,6 +112,12 @@ function MyCategories()
     {
         setVisible( true );
         setTarget( id );
+    }
+
+    // Paging Click Events
+    const onPagingClicked = ( page ) =>
+    {
+        console.log('?');
     }
 
     return (
@@ -196,7 +220,7 @@ function MyCategories()
                         </MDBTableHead>
                         <MDBTableBody className=''>
                             {
-                                categories.map( category => 
+                                categories.list.map( category => 
                                 {
                                     return (
                                         <MyCategory key={ category.id }
@@ -215,8 +239,49 @@ function MyCategories()
                         </MDBTableBody>
                     </MDBTable>
                 </MDBCardBody>
-                <MDBCardFooter>
-                    
+                <MDBCardFooter className=''>
+                    <MDBPagination end className='mb-0'>
+                        <MDBPaginationItem disabled>
+                            <MDBPaginationLink onClick={ () => onPagingClicked() } tabIndex={-1} aria-disabled='true'>
+                                Previous
+                            </MDBPaginationLink>
+                        </MDBPaginationItem>
+                        {
+                            (() =>
+                            {
+                                const elments = [];
+                                
+                                for(var i = 1; i <= categories.totalPage; i++ )
+                                {
+                                    if( i === categories.page )
+                                    {
+                                        elments.push
+                                        (
+                                            <MDBPaginationItem active aria-current='page'>
+                                                <MDBPaginationLink onClick={ () => onPagingClicked() }>
+                                                    {i} <span className='visually-hidden'>(current)</span>
+                                                </MDBPaginationLink>
+                                            </MDBPaginationItem>
+                                        )   
+                                    }
+                                    else
+                                    {
+                                        elments.push
+                                        (
+                                            <MDBPaginationItem>
+                                                <MDBPaginationLink onClick={ () => onPagingClicked() }>{i}</MDBPaginationLink>
+                                            </MDBPaginationItem>
+                                        )
+                                    }
+                                }
+
+                                return elments;
+                            })()
+                        }
+                        <MDBPaginationItem>
+                            <MDBPaginationLink onClick={ () => onPagingClicked() }>Next</MDBPaginationLink>
+                        </MDBPaginationItem>
+                    </MDBPagination>
                 </MDBCardFooter>
             </MDBCard>
 
