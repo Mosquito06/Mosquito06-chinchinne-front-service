@@ -9,40 +9,25 @@ function MyDiary()
 {
     // Global State
     const { GLOBAL_TOKEN } = useContext(GlobalContext);
-    
-    // Query State
-    const [queryKey, setQueryKey] = useState([ COMMON_QUERY_KEYS.SEARCH_MEMO, { pathString : GLOBAL_TOKEN.token.uuid } ])
 
     // Diary State
     const [diary, setDiary] = useState([]);
 
-    // Search State
-    const [search, setSearch] = useState(
-    {
-         keys : queryKey
-        ,isFetch : true
-    })
+    // Visible State
+    const [isVisible, setVisible] = useState(false);
     
     // Search Query
     const SearchMemoQuery = MemoApi.useSearchMemo(
     {
         queryOptions : 
         {
-             keys: search.keys
+             keys: [ COMMON_QUERY_KEYS.SEARCH_MEMO, { pathString : GLOBAL_TOKEN.token.uuid } ]
             ,success : ( res ) =>
             {
                 setDiary(res.data);
             }
-            ,settle : () =>
-            {
-                // setSearch( prevState => (
-                // {
-                //      ...prevState
-                //     ,isFetch : false
-                    
-                // }));
-            }
-            ,isEnabled : search.isFetch
+            ,settle : () => {}
+            ,isEnabled : true
         }
     })
 
@@ -63,23 +48,34 @@ function MyDiary()
                 <div className="h2 m-0">
                     <span>MEMO</span>
                 </div>
-                <button type="button" 
-                        className="btn btn-primary position-absolute end-0 me-3"
-                        onClick=
-                        {
-                            () =>
+                <div className='d-flex align-items-center position-absolute end-0 me-3'>
+                    <div className='me-3'>
+                        <MDBCheckbox    id='completeView' 
+                                        checked={ isVisible } 
+                                        label='완료된 항목 보기'
+                                        onChange= { ( e ) => { setVisible( e.target.checked ) } }
+                        />
+                    </div>
+                    <button type="button" 
+                            className="btn btn-primary"
+                            onClick=
                             {
-                                setDiary( prevState => ( [...prevState, { memoId : COMMON_STATUS.CREATE + '_' + new Date().getTime() , memo : '', completeYn : COMMON_YN.NO }]))
+                                () =>
+                                {
+                                    setDiary( prevState => ( [...prevState, { memoId : COMMON_STATUS.CREATE + '_' + new Date().getTime() , memo : '', completeYn : COMMON_YN.NO }]))
+                                }
                             }
-                        }
-                >
-                    <i className="fas fa-plus"></i>
-                </button>
+                    >
+                        <i className="fas fa-plus"></i>
+                    </button>
+                </div>
             </MDBCardHeader>
             <MDBCardBody className='p-3 pe-2' style={ {overflowY : 'scroll'}}>
-                {/* <MDBCheckbox>완료된 항목 보기</MDBCheckbox> */}
                 {
-                    diary.map( memo =>
+                    diary.filter( memo => 
+                    {
+                        return isVisible ? true : memo.completeYn === COMMON_YN.YES ? false : true;
+                    }).map( memo =>
                     {
                         return (
                             <MyMemo key={ memo.memoId }
