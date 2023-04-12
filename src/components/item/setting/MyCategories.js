@@ -213,7 +213,8 @@ function MyCategories()
                                 </th>
                                 <th scope='col' style={ {width : '16.6%'} }>ID</th>
                                 <th scope='col' style={ {width : '16.6%'} }>이름</th>
-                                <th scope='col' style={ {width : '16.6%'} }>색상</th>
+                                <th scope='col' style={ {width : '16.6%'} }>배경색상</th>
+                                <th scope='col' style={ {width : '16.6%'} }>텍스트색상</th>
                                 <th scope='col' style={ {width : '16.6%'} }>등록일시</th>
                                 <th scope='col' style={ {width : '16.6%'} }>수정일시</th>
                                 {/* <th scope='col'>수정</th> */}
@@ -228,7 +229,8 @@ function MyCategories()
                                                     checked={ checked.isChecked }
                                                     id={ category.id }
                                                     name={ category.name }
-                                                    color={ category.color }
+                                                    backColor={ category.backColor }
+                                                    textColor={ category.textColor }
                                                     regDate={ category.regDate }
                                                     modDate={ category.modDate }
                                                     onCheckChanged={ onCheckChanged }

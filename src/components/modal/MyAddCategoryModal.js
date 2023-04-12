@@ -25,7 +25,8 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
     {
          id : 0
         ,name : ''
-        ,color : '#000000'
+        ,backColor : '#000000'
+        ,textColor : '#000000'
     });
 
     // Search Category Query
@@ -41,7 +42,8 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                      ...prevState
                     ,id : res.data.id
                     ,name : res.data.name
-                    ,color : res.data.color
+                    ,backColor : res.data.backColor
+                    ,textColor : res.data.textColor
                 }))
             }
             ,settle : () => {}
@@ -112,7 +114,8 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
             {
                  id : 0
                 ,name : ''
-                ,color : '#000000'
+                ,backColor : '#000000'
+                ,textColor : '#000000'
             });
 
             setTarget( 0 );
@@ -157,8 +160,9 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                         <MDBTable className='text-center'>
                             <MDBTableHead className='fLn_Bd' light>
                                 <tr>
-                                    <th scope='col'>이름</th>
-                                    <th scope='col'>색상</th>
+                                    <th scope='col' className='w-50'>이름</th>
+                                    <th scope='col' className='w-25'>배경색상</th>
+                                    <th scope='col' className='w-25'>텍스트색상</th>
                                 </tr>
                             </MDBTableHead>
                             <MDBTableBody className=''>
@@ -167,7 +171,10 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                         <MDBInput label='이름' type='text' name='name' value={ category.name } onChange={ onCategoryChanged } ref={ el => compRef.current[0] = el }/>
                                     </td>
                                     <td>
-                                        <MDBInput className='' type='color' name='color' value={category.color} onChange={ onCategoryChanged } ref={ el => compRef.current[1] = el }/>     
+                                        <MDBInput className='' type='color' name='backColor' value={category.backColor} onChange={ onCategoryChanged } ref={ el => compRef.current[1] = el }/>     
+                                    </td>
+                                    <td>
+                                        <MDBInput className='' type='color' name='textColor' value={category.textColor} onChange={ onCategoryChanged } ref={ el => compRef.current[2] = el }/>     
                                     </td>
                                 </tr>
                             </MDBTableBody>
@@ -224,7 +231,8 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                                             {
                                                                  id : category.id
                                                                 ,name : category.name
-                                                                ,color : category.color
+                                                                ,backColor : category.backColor
+                                                                ,textColor : category.textColor
                                                             })
                                                         } 
                                                     }
@@ -253,7 +261,8 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                                         AddCategoryQuery.mutate( 
                                                         {
                                                              name : category.name
-                                                            ,color : category.color
+                                                            ,backColor : category.backColor
+                                                            ,textColor : category.textColor
                                                         })
                                                     }
                                                 }

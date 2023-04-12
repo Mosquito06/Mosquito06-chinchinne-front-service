@@ -2,7 +2,7 @@ import React, { useRef, useState, useContext, useEffect } from 'react';
 import { DateFormatter } from 'module/Common';
 import { MDBCheckbox } from 'mdb-react-ui-kit';
 
-function MyCategory({ checked, id, name, color, regDate, modDate, onCheckChanged, onCategoryClicked })
+function MyCategory({ checked, id, name, backColor, textColor, regDate, modDate, onCheckChanged, onCategoryClicked })
 {
     // Checked State
     const [isChecked, setChecked] = useState(checked);
@@ -37,7 +37,16 @@ function MyCategory({ checked, id, name, color, regDate, modDate, onCheckChanged
                 <div className='d-flex justify-content-center align-items-center'>
                     <div>
                         <span   className='d-block square rounded-circle' 
-                                style={ { height : '25px', width : '25px', backgroundColor : color ? color : '000000'  } }
+                                style={ { height : '25px', width : '25px', backgroundColor : backColor ? backColor : '#000000'  } }
+                        />
+                    </div>
+                </div>
+            </td>
+            <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
+                <div className='d-flex justify-content-center align-items-center'>
+                    <div>
+                        <span   className='d-block square rounded-circle' 
+                                style={ { height : '25px', width : '25px', backgroundColor : textColor ? textColor : '#000000'  } }
                         />
                     </div>
                 </div>

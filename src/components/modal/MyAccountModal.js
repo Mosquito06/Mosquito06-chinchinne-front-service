@@ -137,7 +137,7 @@ export default ( ) =>
                                                                                                 <div className='fw-bold'>{ CommaFormatter(row.amount) }</div>
                                                                                                 <div className='text-muted'>{ row.memo }</div>
                                                                                             </div>
-                                                                                            <MDBBadge pill light color='success'>{ row.category }</MDBBadge>
+                                                                                            <MDBBadge light style={{backgroundColor : row.backColor, color : row.textColor}}>{ row.category }</MDBBadge>
                                                                                         </MDBListGroupItem>
                                                                                     )
                                                                                 })
@@ -180,7 +180,7 @@ export default ( ) =>
                                                                                                 <div className='fw-bold'>{ CommaFormatter(row.amount) }</div>
                                                                                                 <div className='text-muted'>{ row.memo }</div>
                                                                                             </div>
-                                                                                            <MDBBadge pill light color='success'>{ row.category }</MDBBadge>
+                                                                                            <MDBBadge light style={{backgroundColor : row.backColor, color : row.textColor}}>{ row.category }</MDBBadge>
                                                                                         </MDBListGroupItem>
                                                                                     )
                                                                                 })
