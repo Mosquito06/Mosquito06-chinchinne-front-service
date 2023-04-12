@@ -115,9 +115,16 @@ function MyCategories()
     }
 
     // Paging Click Events
-    const onPagingClicked = ( page ) =>
+    const onPagingClicked = ( e ) =>
     {
-        console.log('?');
+        const page = e.target.getAttribute('page') ?? 1;
+        
+        setSearch( prevState => (
+        {
+                ...prevState
+            ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords + '&page=' + page } ]
+            ,enabled : true
+        }))
     }
 
     return (
@@ -146,16 +153,10 @@ function MyCategories()
                             {
                                 () =>
                                 {
-                                    // if( !search.keywords )
-                                    // {
-                                    //     search.compRef.current[0].focus();
-                                    //     return;
-                                    // }
-                                    
-                                    setSearch( prevState => (
+                                   setSearch( prevState => (
                                     {
                                          ...prevState
-                                        ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords } ]
+                                        ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords + '&page=' + 1 } ]
                                         ,enabled : true
                                     }))
                                 }
@@ -241,8 +242,13 @@ function MyCategories()
                 </MDBCardBody>
                 <MDBCardFooter className=''>
                     <MDBPagination end className='mb-0'>
-                        <MDBPaginationItem disabled>
-                            <MDBPaginationLink onClick={ () => onPagingClicked() } tabIndex={-1} aria-disabled='true'>
+                        <MDBPaginationItem  disabled={ categories.page > 1 ? false : true } 
+                                            style={{cursor : categories.page > 1 ? 'pointer' : 'not-allowed'}}
+                        >
+                            <MDBPaginationLink  aria-disabled={ categories.page > 1 ? 'false' : 'true' }
+                                                onClick={ onPagingClicked }
+                                                page={ categories.page - 1 }
+                            >
                                 Previous
                             </MDBPaginationLink>
                         </MDBPaginationItem>
@@ -257,8 +263,8 @@ function MyCategories()
                                     {
                                         elments.push
                                         (
-                                            <MDBPaginationItem active aria-current='page'>
-                                                <MDBPaginationLink onClick={ () => onPagingClicked() }>
+                                            <MDBPaginationItem key={i} active aria-current='page' style={{cursor : 'pointer'}}>
+                                                <MDBPaginationLink page={ i } onClick={ onPagingClicked }>
                                                     {i} <span className='visually-hidden'>(current)</span>
                                                 </MDBPaginationLink>
                                             </MDBPaginationItem>
@@ -268,8 +274,8 @@ function MyCategories()
                                     {
                                         elments.push
                                         (
-                                            <MDBPaginationItem>
-                                                <MDBPaginationLink onClick={ () => onPagingClicked() }>{i}</MDBPaginationLink>
+                                            <MDBPaginationItem key={i} style={{cursor : 'pointer'}}>
+                                                <MDBPaginationLink page={ i } onClick={ onPagingClicked }>{i}</MDBPaginationLink>
                                             </MDBPaginationItem>
                                         )
                                     }
@@ -278,8 +284,15 @@ function MyCategories()
                                 return elments;
                             })()
                         }
-                        <MDBPaginationItem>
-                            <MDBPaginationLink onClick={ () => onPagingClicked() }>Next</MDBPaginationLink>
+                        <MDBPaginationItem  disabled={ categories.page < categories.totalPage ? false : true } 
+                                            style={{cursor : categories.page < categories.totalPage ? 'pointer' : 'not-allowed'}}
+                        >
+                            <MDBPaginationLink  aria-disabled={ categories.page < categories.totalPage ? 'false' : 'true' }
+                                                onClick={ onPagingClicked }
+                                                page={ categories.page + 1 }
+                            >
+                                Next
+                            </MDBPaginationLink>
                         </MDBPaginationItem>
                     </MDBPagination>
                 </MDBCardFooter>
