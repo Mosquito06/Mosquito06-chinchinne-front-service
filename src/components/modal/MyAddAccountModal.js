@@ -38,7 +38,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
     {
         queryOptions : 
         {
-             keys: isVisible ? [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid } ] : []
+             keys: isVisible ? [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid + '/all' } ] : []
             ,success : ( res ) =>
             {
                 setCategoreis(res.data);
