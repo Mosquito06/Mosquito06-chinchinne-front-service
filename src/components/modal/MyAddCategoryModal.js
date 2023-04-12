@@ -2,14 +2,13 @@ import React, { useRef, useState, useContext, useLayoutEffect } from 'react';
 import CategoryApi from 'api/CategoryApi';
 import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';
-
-import { COMMON_QUERY_KEYS } from 'module/CommonCode';
+import { COMMON_QUERY_KEYS, COMMON_STATUS } from 'module/CommonCode';
 
 import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import { MDBModal, MDBModalDialog, MDBModalContent, MDBModalHeader, MDBModalTitle, MDBModalBody, MDBModalFooter } from 'mdb-react-ui-kit';
 
-export default ( { isVisible, setVisible, target, setTarget } ) => 
+export default ( { isVisible, setVisible, target, setTarget, onCategoriesChanged } ) => 
 {
     // Global State
     const { GLOBAL_MODAL, GLOBAL_TOKEN } = useContext(GlobalContext);
@@ -58,8 +57,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
-
+                onCategoriesChanged( COMMON_STATUS.CREATE, 1 );
                 setVisible(false);
             }
             ,settle : () => {}
@@ -73,8 +71,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
-
+                onCategoriesChanged( COMMON_STATUS.UPDATE );
                 setVisible(false);
             }
             ,settle : () => {}
@@ -88,8 +85,7 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_CATEGORIES]);
-
+                onCategoriesChanged( COMMON_STATUS.DELETE, 1 );
                 setVisible(false);
             }
             ,settle : () => {}
@@ -206,10 +202,12 @@ export default ( { isVisible, setVisible, target, setTarget } ) =>
                                                     { 
                                                         () => 
                                                         { 
-                                                            DeleteCategoryQuery.mutate( 
-                                                            {
-                                                                id : category.id
-                                                            })
+                                                            DeleteCategoryQuery.mutate(
+                                                            [
+                                                                {
+                                                                    id : category.id
+                                                                }
+                                                            ])
                                                         } 
                                                     }
                                             >

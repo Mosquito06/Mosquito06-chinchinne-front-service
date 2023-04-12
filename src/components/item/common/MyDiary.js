@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import MemoApi from 'api/MemoApi';
 import MyMemo from 'components/item/common/MyMemo';
 import { GlobalContext } from 'context/GlobalContext';
-import { MDBCard, MDBCardHeader, MDBCardBody } from 'mdb-react-ui-kit';
+import { MDBCard, MDBCardHeader, MDBCardBody, MDBCheckbox } from 'mdb-react-ui-kit';
 import { COMMON_QUERY_KEYS, COMMON_YN, COMMON_STATUS } from 'module/CommonCode';
 
 function MyDiary()
@@ -77,6 +77,7 @@ function MyDiary()
                 </button>
             </MDBCardHeader>
             <MDBCardBody className='p-3 pe-2' style={ {overflowY : 'scroll'}}>
+                {/* <MDBCheckbox>완료된 항목 보기</MDBCheckbox> */}
                 {
                     diary.map( memo =>
                     {

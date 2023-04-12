@@ -1,5 +1,6 @@
 import React, { useRef, useState, useContext } from 'react';
 import CategoryApi from 'api/CategoryApi';
+import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';
 import MyCategory from 'components/item/setting/MyCategory';
 import MyAddCategoryModal from 'components/modal/MyAddCategoryModal';
@@ -7,12 +8,15 @@ import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import { MDBTable, MDBTableHead, MDBTableBody, MDBCheckbox } from 'mdb-react-ui-kit';
 import { MDBCard, MDBCardHeader, MDBCardBody, MDBCardFooter } from 'mdb-react-ui-kit';
 import { MDBPagination, MDBPaginationItem, MDBPaginationLink } from 'mdb-react-ui-kit';
-import { COMMON_QUERY_KEYS } from 'module/CommonCode';
+import { COMMON_QUERY_KEYS, COMMON_STATUS } from 'module/CommonCode';
 
 function MyCategories()
 {
     // Global State
     const { GLOBAL_TOKEN } = useContext(GlobalContext);
+
+    // Query Client
+    const queryClient = useQueryClient();
 
     // Search State
     const [search, setSearch] = useState(
@@ -54,8 +58,6 @@ function MyCategories()
              keys: search.keys
             ,success : ( res ) =>
             {
-                console.log( res) ;
-                
                 setCategories( prevState => (
                 {
                      ...prevState
@@ -78,12 +80,31 @@ function MyCategories()
         }
     })
 
+    // Delete Category Query
+    const DeleteCategoryQuery = CategoryApi.useDeleteCategory(
+    {
+        queryOptions :
+        {
+            success : ( res ) =>
+            {
+                setChecked( prevState => (
+                {
+                     ...prevState
+                    ,list : []
+                }))
+                
+                onCategoriesChanged( COMMON_STATUS.DELETE, res.data.length );
+            }
+            ,settle : () => {}
+        }
+    })
+
     // CheckBox Chnaged Events
     const onCheckChanged = ( isChecked, id ) =>
     {
         if( isChecked )
         {
-            const category = categories.filter( category => 
+            const category = categories.list.filter( category => 
             {
                 return category.id === id;
             })[0];
@@ -121,7 +142,42 @@ function MyCategories()
         
         setSearch( prevState => (
         {
-                ...prevState
+             ...prevState
+            ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords + '&page=' + page } ]
+            ,enabled : true
+        }))
+    }
+
+    // Categories Change Events
+    const onCategoriesChanged = ( status, count ) =>
+    {
+        let page = categories.page;
+        
+        switch( status )
+        {
+            case COMMON_STATUS.CREATE :
+                
+                if( categories.list.length >= categories.perPage )
+                {
+                    page = Math.ceil(( categories.total + count ) / categories.perPage);
+                }
+
+                break;
+            case COMMON_STATUS.UPDATE :
+                break;
+            case COMMON_STATUS.DELETE :
+                
+                if( ( categories.list.length - count ) <= 0 && page > 1 )
+                {
+                    page -= 1;
+                }
+
+                break;
+        }
+
+        setSearch( prevState => (
+        {
+             ...prevState
             ,keys : [ COMMON_QUERY_KEYS.SEARCH_CATEGORIES, { pathString : GLOBAL_TOKEN.token.uuid, queryString : 'keywords=' + search.keywords + '&page=' + page } ]
             ,enabled : true
         }))
@@ -181,7 +237,18 @@ function MyCategories()
                             {
                                 () =>
                                 {
-                                    console.log( checked.list )
+                                    if ( checked.list.length <= 0 )
+                                    {
+                                        return;
+                                    }
+                                    
+                                    DeleteCategoryQuery.mutate
+                                    (
+                                        checked.list.map( category => 
+                                        {
+                                            return { id : category.id }
+                                        })
+                                    );
                                 }
                             }
                     >
@@ -202,7 +269,7 @@ function MyCategories()
                                                             {
                                                                 ...prevState
                                                                 ,isChecked : e.target.checked
-                                                                ,list : categories.filter( category =>
+                                                                ,list : categories.list.filter( category =>
                                                                 {
                                                                     return e.target.checked
                                                                 })
@@ -300,7 +367,7 @@ function MyCategories()
                 </MDBCardFooter>
             </MDBCard>
 
-            <MyAddCategoryModal isVisible={visible} setVisible={setVisible} target={target} setTarget={ setTarget } />
+            <MyAddCategoryModal isVisible={visible} setVisible={setVisible} target={target} setTarget={ setTarget } onCategoriesChanged={ onCategoriesChanged }/>
         </>
     )
 }

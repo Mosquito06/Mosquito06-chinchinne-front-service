@@ -252,7 +252,7 @@ export default
                 return axiosUtil.axios(
                 { 
                      method : axiosUtil.METHOD.DEL
-                    ,url : '/category-service/' + GLOBAL_TOKEN.token.uuid + '/category'
+                    ,url : '/category-service/' + GLOBAL_TOKEN.token.uuid + '/categories'
                     ,params : params
                     ,option : 
                     { 

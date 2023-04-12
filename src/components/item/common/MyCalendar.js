@@ -143,8 +143,6 @@ function MyCalendar( { year, month, time })
                     let elments = [], list = [];
                     let isStart = false;
 
-                    console.log( tmp );
-
                     for(let i = 0; i < date.list.length; i++)
                     {
                         if( date.list[i] === 1 )
