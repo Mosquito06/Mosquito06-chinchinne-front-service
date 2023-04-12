@@ -11,6 +11,12 @@ function MyCalendar( { year, month, time })
     // Global State
     const { GLOBAL_TOKEN, GLOBAL_MONEY } = useContext(GlobalContext);
 
+    // Const Variables
+    const LAST_MONTH = new Date(year, month, 0);
+    const CURRENT_MONTH_START = new Date(year, month, 1);
+    const CURRENT_MONTH_END = new Date(year, month + 1, 0);
+    const NEXT_MONTH = new Date(year, month + 1, 1);
+
     // Search State
     const [search, setSearch] = useState(
     {
@@ -88,19 +94,16 @@ function MyCalendar( { year, month, time })
     
     const createCalendar = () =>
     {
-        const lastM = new Date(year, month, 0);
-        const curStart = new Date(year, month, 1);
-        const curEnd = new Date(year, month + 1, 0);
         const list = [];
 
-        let pos = curStart.getDay();
+        let pos = CURRENT_MONTH_START.getDay();
         
         for(let i = 0; pos > 0; pos--, i++)
         {
-            list[pos - 1] = lastM.getDate() - i;
+            list[pos - 1] = LAST_MONTH.getDate() - i;
         }
 
-        for(let i = 0; i < curEnd.getDate(); i++)
+        for(let i = 0; i < CURRENT_MONTH_END.getDate(); i++)
         {
             list.push(i + 1);
         }
@@ -140,6 +143,8 @@ function MyCalendar( { year, month, time })
                     let elments = [], list = [];
                     let isStart = false;
 
+                    console.log( tmp );
+
                     for(let i = 0; i < date.list.length; i++)
                     {
                         if( date.list[i] === 1 )
@@ -157,7 +162,7 @@ function MyCalendar( { year, month, time })
                             <MyDate key={ 'cal_date_' + ( !isStart ? ( month - 1 ) : month ) + '_' + date.list[i] } 
                                     status={ !isStart ? COMMON_DATE_STATUS.PREV : COMMON_DATE_STATUS.CUR }
                                     date={ date.list[i] }
-                                    time={ isStart ? new Date(year, month, date.list[i]).getTime() : 0 }
+                                    time={ isStart ? new Date(year, month, date.list[i]).getTime() : new Date(LAST_MONTH.getFullYear(), LAST_MONTH.getMonth(), date.list[i]).getTime() }
                                     income={ displayData.length > 0 ? displayData[0].incomeTotal : null }
                                     expense={ displayData.length > 0 ? displayData[0].expenseTotal : null }
                             />
@@ -183,6 +188,7 @@ function MyCalendar( { year, month, time })
                                                     <MyDate key={ 'cal_date_' + ( month + 1 ) + '_' + next } 
                                                             status={ COMMON_DATE_STATUS.NEXT } 
                                                             date={ next }
+                                                            time={ new Date(NEXT_MONTH.getFullYear(), NEXT_MONTH.getMonth(), next).getTime()}
                                                     />
                                                 );
                                                 
