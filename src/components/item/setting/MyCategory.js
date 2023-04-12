@@ -36,7 +36,7 @@ function MyCategory({ checked, id, name, backColor, textColor, regDate, modDate,
             <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
                 <div className='d-flex justify-content-center align-items-center'>
                     <div>
-                        <span   className='d-block square rounded-circle' 
+                        <span   className='d-block square rounded-circle border border-secondary' 
                                 style={ { height : '25px', width : '25px', backgroundColor : backColor ? backColor : '#000000'  } }
                         />
                     </div>
@@ -45,7 +45,7 @@ function MyCategory({ checked, id, name, backColor, textColor, regDate, modDate,
             <td onClick={ () => onCategoryClicked(id) } style={ { cursor : 'pointer' }}>
                 <div className='d-flex justify-content-center align-items-center'>
                     <div>
-                        <span   className='d-block square rounded-circle' 
+                        <span   className='d-block square rounded-circle border border-secondary' 
                                 style={ { height : '25px', width : '25px', backgroundColor : textColor ? textColor : '#000000'  } }
                         />
                     </div>
