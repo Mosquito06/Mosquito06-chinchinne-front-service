@@ -8,6 +8,7 @@ export const COMMON_QUERY_KEYS =
     ,SEARCH_CATEGORIES : 'search_categories'
     ,SEARCH_CATEGORY : 'search_category'
     ,SEARCH_MEMO : 'search_memo'
+    ,SEARCH_CHART : 'search_chart'
 }
 
 // 공통 텍스트

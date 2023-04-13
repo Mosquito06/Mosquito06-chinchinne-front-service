@@ -4,10 +4,10 @@ export const GlobalContext = createContext();
 
 export default ( { children } ) => 
 {
-    // 토큰 정보
+    // Token State
     const [token, setToken] = useState( JSON.parse(sessionStorage.getItem('ref-token')) );
 
-    // 금액 State
+    // Money State
     const [money, setMoney] = useState(
     {
          budget : 0
@@ -15,7 +15,15 @@ export default ( { children } ) =>
         ,expense : 0
     })
 
-    // 공통 팝업 State
+    // date State
+    const [date, setDate] = useState(
+    {
+         year : new Date().getFullYear()
+        ,month : new Date().getMonth()
+        ,time : new Date().getTime()
+    })
+
+    // Common Popup State
     const [modal, setModal] = useState(
     { 
          isVisible : false
@@ -43,7 +51,7 @@ export default ( { children } ) =>
         }
     });
 
-    // 상세 팝업 State
+    // Common Popup Detail State
     const [detail, setDetail] = useState(
     { 
          isVisible : false
@@ -67,6 +75,7 @@ export default ( { children } ) =>
                  GLOBAL_TOKEN : { token, setToken }
                 ,GLOBAL_MONEY : { money, setMoney }
                 ,GLOBAL_MODAL : { modal, setModal, detail, setDetail }
+                ,GLOBAL_DATE : { date, setDate }
             }
         }>
             {children}

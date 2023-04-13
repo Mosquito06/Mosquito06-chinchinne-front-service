@@ -76,15 +76,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
-
-                setVisible(false);
-                                            
-                setTimeout(() => 
-                {
-                    parentShow(true);
-                }, 400);
+                onCommandSuccess();
             }
             ,settle : () => {}
         }
@@ -97,15 +89,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
-
-                setVisible(false);
-                                            
-                setTimeout(() => 
-                {
-                    parentShow(true);
-                }, 400);
+                onCommandSuccess();
             }
             ,settle : () => {}
         }
@@ -118,15 +102,7 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
         {
             success : ( res ) =>
             {
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNT]);
-                queryClient.refetchQueries([COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]);
-
-                setVisible(false);
-                                            
-                setTimeout(() => 
-                {
-                    parentShow(true);
-                }, 400);
+                onCommandSuccess();
             }
             ,settle : () => {}
         }
@@ -156,6 +132,23 @@ export default ( { isVisible, setVisible, target, setTarget, parentShow } ) =>
              ...prevState
             ,[ e.target.name ] : value
         }))
+    }
+
+    // Command Success Events
+    const onCommandSuccess = () =>
+    {
+        const lastAccountKey = queryClient.getQueriesData( {queryKey : [COMMON_QUERY_KEYS.SEARCH_ACCOUNTS]} ).slice(-1)[0][0];
+        const lastChartKey = queryClient.getQueriesData( {queryKey : [COMMON_QUERY_KEYS.SEARCH_CHART]} ).slice(-1)[0][0];
+        
+        queryClient.refetchQueries(lastAccountKey);
+        queryClient.refetchQueries(lastChartKey);
+
+        setVisible(false);
+                                    
+        setTimeout(() => 
+        {
+            parentShow(true);
+        }, 400);
     }
 
     useLayoutEffect(() =>

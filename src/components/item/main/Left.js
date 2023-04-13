@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useLayoutEffect } from 'react';
 import { CommaFormatter } from 'module/Common';
 import { COMMON_TEXT } from 'module/CommonCode';
 import { GlobalContext } from 'context/GlobalContext';
@@ -11,8 +11,9 @@ import { MDBDropdown, MDBDropdownItem, MDBDropdownMenu, MDBDropdownToggle, MDBIn
 function Left()
 {
     // Global State
-    const { GLOBAL_MONEY } = useContext(GlobalContext);
+    const { GLOBAL_MONEY, GLOBAL_DATE } = useContext(GlobalContext);
     
+    // Calendar State
     const [calendar, setCalendar] = useState(
     {
          year : new Date().getFullYear()
@@ -25,6 +26,18 @@ function Left()
     {
         
     }
+
+    useLayoutEffect( () =>
+    {
+        GLOBAL_DATE.setDate( prevState => (
+        {
+             ...prevState
+            ,year : calendar.year
+            ,month : calendar.month
+            ,time : calendar.time
+        }))
+
+    }, [ calendar ])
     
     return (
         <>
