@@ -19,12 +19,12 @@
 
 2. 구현 화면
 <img src="https://user-images.githubusercontent.com/32257949/226219670-dcc3a309-f127-4f1c-95a3-fa6f6b3167bb.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230909460-63caa465-a0bb-4413-af4e-85f1b1186faa.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230909482-1a0120fb-681a-4a5e-8f37-8b90c948347f.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230909492-b243b70e-a684-4b1e-ae2f-e3771647175a.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/233873108-4f3330cb-8b62-4e90-b607-052b393834f4.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/233872707-91f24aa5-0a10-4c5d-8432-b1761bc19dd6.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/233872702-fcba2f3a-23b7-46dc-8923-7cf1467635c8.png"  width="750" height="370">
 <img src="https://user-images.githubusercontent.com/32257949/230909498-d92b82c5-3f01-4541-a64e-0edf2757b264.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230911209-c5486a77-1ecb-4a0f-aa87-9ad359299846.png"  width="750" height="370">
-<img src="https://user-images.githubusercontent.com/32257949/230911217-59879a09-730c-4f02-9fbb-7bc4bdd11f38.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/233872704-eb03a934-e0c5-42a8-8926-243010b1ce0f.png"  width="750" height="370">
+<img src="https://user-images.githubusercontent.com/32257949/233872705-8eaef71b-9660-46ed-8704-a84b440ffa3e.png"  width="750" height="370">
 
 3. 기술 스택 및 설명
 <div align="left">
