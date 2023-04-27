@@ -296,8 +296,8 @@ function MyCategories()
                                                     checked={ checked.isChecked }
                                                     id={ category.id }
                                                     name={ category.name }
-                                                    backColor={ category.backColor }
-                                                    textColor={ category.textColor }
+                                                    backColor={ category.color.background }
+                                                    textColor={ category.color.text }
                                                     regDate={ category.regDate }
                                                     modDate={ category.modDate }
                                                     onCheckChanged={ onCheckChanged }

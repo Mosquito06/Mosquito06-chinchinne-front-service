@@ -41,8 +41,8 @@ export default ( { isVisible, setVisible, target, setTarget, onCategoriesChanged
                      ...prevState
                     ,id : res.data.id
                     ,name : res.data.name
-                    ,backColor : res.data.backColor
-                    ,textColor : res.data.textColor
+                    ,backColor : res.data.color.background
+                    ,textColor : res.data.color.text
                 }))
             }
             ,settle : () => {}
