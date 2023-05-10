@@ -76,3 +76,11 @@ export const COMMON_REG_EXP_CODE =
 {
     ONLY_NUM : 1
 }
+
+// 공통 이벤트 타입
+export const COMMON_EVENT_TYPE = 
+{
+     MEMO : 'M'
+    ,BUDGET : 'B'
+    ,CATEGORY : 'C'
+}

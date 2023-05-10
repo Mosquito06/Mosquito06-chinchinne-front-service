@@ -1,8 +1,9 @@
 import { useState, useContext } from 'react';
 import MemoApi from 'api/MemoApi';
+import EventApi from 'api/EventApi';
 import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';
-import { COMMON_YN, COMMON_STATUS, COMMON_QUERY_KEYS } from 'module/CommonCode';
+import { COMMON_YN, COMMON_STATUS, COMMON_QUERY_KEYS, COMMON_EVENT_TYPE } from 'module/CommonCode';
 
 function MyMemo({ id, contents, isComplete, onCancelClicked })
 {
@@ -95,6 +96,16 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
         }
     })
 
+    // Send Event Query
+    const SendEventQuery = EventApi.useSendEvent(
+    {
+        queryOptions :
+        {
+             success : ( res ) => {}
+            ,settle : () => {}
+        }
+    })
+
     return (
         <div className="form-check d-flex align-items-center position-relative mt-1">
             <input  id={ 'memo_' + memo.id }
@@ -174,6 +185,12 @@ function MyMemo({ id, contents, isComplete, onCancelClicked })
                                                         AddMemoQuery.mutate( 
                                                         {  
                                                             memo : memo.content
+                                                        })
+
+                                                        SendEventQuery.mutate(
+                                                        {
+                                                             eventCode : COMMON_EVENT_TYPE.MEMO
+                                                            ,memo : memo.content
                                                         })
                                                     }
                                                     else

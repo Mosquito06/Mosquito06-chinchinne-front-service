@@ -1,10 +1,11 @@
 import React, { useRef, useState, useEffect, useContext } from 'react';
 import GeneralApi from 'api/GeneralApi';
+import EventApi from 'api/EventApi';
 import { CommaFormatter } from 'module/Common';
 import { useQueryClient   } from 'react-query';
 import { MDBBtn, MDBInput } from 'mdb-react-ui-kit';
 import { GlobalContext } from 'context/GlobalContext';
-import { COMMON_QUERY_KEYS } from 'module/CommonCode';
+import { COMMON_QUERY_KEYS, COMMON_EVENT_TYPE } from 'module/CommonCode';
 
 function MyBudget( { value })
 {
@@ -40,6 +41,16 @@ function MyBudget( { value })
                     ,isEdit : false
                 }))
             }
+            ,settle : () => {}
+        }
+    })
+
+    // Send Event Query
+    const SendEventQuery = EventApi.useSendEvent(
+    {
+        queryOptions :
+        {
+             success : ( res ) => {}
             ,settle : () => {}
         }
     })
@@ -125,6 +136,12 @@ function MyBudget( { value })
                                                         UpdateGeneralQuery.mutate(
                                                         {
                                                             budget : budget.value
+                                                        })
+
+                                                        SendEventQuery.mutate(
+                                                        {
+                                                             eventCode : COMMON_EVENT_TYPE.BUDGET
+                                                            ,budget : budget.value
                                                         })
                                                     }
                                                 }

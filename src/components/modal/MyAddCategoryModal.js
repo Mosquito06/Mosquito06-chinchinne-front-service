@@ -1,8 +1,9 @@
 import React, { useRef, useState, useContext, useLayoutEffect } from 'react';
 import CategoryApi from 'api/CategoryApi';
+import EventApi from 'api/EventApi';
 import { useQueryClient   } from 'react-query';
 import { GlobalContext } from 'context/GlobalContext';
-import { COMMON_QUERY_KEYS, COMMON_STATUS } from 'module/CommonCode';
+import { COMMON_QUERY_KEYS, COMMON_STATUS, COMMON_EVENT_TYPE } from 'module/CommonCode';
 
 import { MDBInput, MDBBtn } from 'mdb-react-ui-kit';
 import { MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
@@ -88,6 +89,16 @@ export default ( { isVisible, setVisible, target, setTarget, onCategoriesChanged
                 onCategoriesChanged( COMMON_STATUS.DELETE, 1 );
                 setVisible(false);
             }
+            ,settle : () => {}
+        }
+    })
+
+    // Send Event Query
+    const SendEventQuery = EventApi.useSendEvent(
+    {
+        queryOptions :
+        {
+             success : ( res ) => {}
             ,settle : () => {}
         }
     })
@@ -261,6 +272,12 @@ export default ( { isVisible, setVisible, target, setTarget, onCategoriesChanged
                                                              name : category.name
                                                             ,backColor : category.backColor
                                                             ,textColor : category.textColor
+                                                        })
+
+                                                        SendEventQuery.mutate(
+                                                        {
+                                                             eventCode : COMMON_EVENT_TYPE.CATEGORY
+                                                            ,category : category.name
                                                         })
                                                     }
                                                 }
